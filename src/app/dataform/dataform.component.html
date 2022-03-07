@@ -1,0 +1,231 @@
+<main>
+    <div class="flex">
+        <div class="header">
+            <h1>Enter Applicant's Data</h1>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="card-wrapper">
+            <mat-card class="full-width">
+                <div>
+                    <h3><small style="color: #9ca3af;">File Number</small> > {{fileNumber}}</h3>
+                    <mat-divider></mat-divider>
+                </div>
+                <br/>
+                <h3>Attach Picture*</h3>
+                <div class="picture-box">
+                    
+                <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                </div>
+                <br/>
+                <form [formGroup]="formGroup">
+                    <div class="flex-bar">
+                        <div class="w-33" *ngFor="let form of form1">
+                            <mat-form-field appearance="fill" class="full-width">
+                                <mat-label>{{form.name}}</mat-label>
+                                <input matInput placeholder="Placeholder" [formControlName]="form.control">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                              </mat-form-field>
+                        </div>
+                  </div>
+                 
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>NIN Number</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="nin">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Passport Number</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="passportnumber">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Date Passport Issue*</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="datePassportIssue">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Date Passport Expires*</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="passportExpiration">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Contact Number</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="contactNumber">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Gender</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="gender">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Date Of Birth</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="dob">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Religion</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="religion">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Marital Status</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="maritalStatus">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-50">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Address</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="address">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-50">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Physical Address</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="physicalAddress">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Next of Kin Name</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="nextOfKin">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Relationship with Next of Kin</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="kinRelationship">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Number of Next of Kin</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>GCC</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="gcc">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Medical Center</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="medicalCenter">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Training</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="training">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="flex-bar">
+                    <div class="w-50">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Vaccine</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="vaccine">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-50">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Agent</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="agent">
+                          </mat-form-field>
+                    </div>
+                    
+                  </div>
+
+                  <div class="flex-bar">
+                    <div style="width: 100% !important;">
+                        <mat-form-field appearance="fill" style="width: 70% !important;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput placeholder="Placeholder" formControlName="remarks" cols="100">
+
+                            </textarea>
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>R Date</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="rDate">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>T Date</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="tDate">
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Duration</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="duration">
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                </form>
+                <section>
+                    <h3>Languages*</h3>
+                <ul class="unordered-list">
+                    <li *ngFor="let subtask of languages.subtasks">
+                      <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
+                                    [color]="subtask.color"
+                                    (ngModelChange)="updateAllComplete()">
+                        {{subtask.name}}
+                      </mat-checkbox>
+                    </li>
+                  </ul>
+                </section>
+<br/>
+                <section>
+                    <h3>Qualifications*</h3>
+                <ul class="unordered-list">
+                    <li *ngFor="let subtask of task.subtasks">
+                      <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
+                                    [color]="subtask.color"
+                                    (ngModelChange)="updateAllComplete()">
+                        {{subtask.name}}
+                      </mat-checkbox>
+                    </li>
+                  </ul>
+                </section>
+            </mat-card>
+        </div>
+    </div>
+    <button mat-raised-button color="primary" style="position: fixed; bottom: 100px;border-radius: 25px;right: 150px;padding-top: 2px;padding-bottom: 2px;">Submit Data</button>
+</main>

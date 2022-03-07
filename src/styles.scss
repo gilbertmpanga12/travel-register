@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.flex{
+    width: 100%;
+    padding-left: 12px;
+    padding-top: 12px;
+}
+.card-wrapper{
+    width: 90%;
+    margin-top:22px;
+    height: 100%;
+}   
+
+.flex-bar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 13px;
+}
+
+.w-33{
+    width: 33.33%;
+}
+.w-50{
+    width: 50%;
+}
+
+.full-width{
+    width: 97%;
+}
+
+.unordered-list{
+    margin-left: -38px;
+    li{
+        display: inline;
+        margin-right: 10px;
+    }
+}
+
+.picture-box{
+    width: 100px;height: 80px;border: 3px; border-style: dashed;border-radius: 3px;position: relative;border-color: #d1d5db;cursor: pointer;
+}
