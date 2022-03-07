@@ -23,6 +23,12 @@
                             <mat-form-field appearance="fill" class="full-width">
                                 <mat-label>{{form.name}}</mat-label>
                                 <input matInput placeholder="Placeholder" [formControlName]="form.control">
+                                <mat-error *ngIf="errorController(form.control)">
+                                    Enter a correct {{form.name}} 
+                                  </mat-error>
+                                  <mat-error *ngIf="requiredError(form.control)">
+                                    {{form.name}} is <strong>required</strong>
+                                  </mat-error>
                               </mat-form-field>
                         </div>
                   </div>
@@ -32,7 +38,7 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>NIN Number</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="nin" required minlength="12" maxlength="12">
+                            <input matInput placeholder="Placeholder" formControlName="nin"  minlength="12" maxlength="12">
                            </mat-form-field>
                            <mat-error *ngIf="errorController('nin')">
                             Enter a correct NIN number and must be 12 characters

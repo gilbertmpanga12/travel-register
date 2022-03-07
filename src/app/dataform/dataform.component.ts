@@ -57,6 +57,7 @@ export class DataformComponent implements OnInit {
   allComplete: boolean = false;
   updateAllComplete() {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
+    console.log(this.allComplete)
   }
 
   someComplete(): boolean {
