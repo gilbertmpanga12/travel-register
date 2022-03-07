@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
+import { districts } from './districts';
 
 export interface Qualification {
   name: string;
@@ -45,6 +46,14 @@ export class DataformComponent implements OnInit {
       {name: 'Others', completed: false, color: 'warn'}
     ],
   };
+  gender: any[] = [{name:'CF', value:'Female'}, {name:'CM',value:'Male'}];// 
+  marriage: string[] = ['Single', 'Married'];
+  religion: string[] = ['Christian', 'Muslim'];
+  vaccine: string[] = ['Not yet', 'One Dose', 'Two Doses', 'Certified', 'Ready'];
+  gcc: string[] = ['Not Yet', 'Booked', 'On Progress', 'Fit', 'Unfit'];
+  training: string[] = ['Not yet', 'Approved', 'On training', 'Trained'];
+  nextOfKeenRelationship: string[] = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
+  address = districts;
   allComplete: boolean = false;
   updateAllComplete() {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
@@ -79,41 +88,50 @@ export class DataformComponent implements OnInit {
 ];
   constructor(private _fb: FormBuilder) {
     this.formGroup = this._fb.group({
-      fname: [],
-      lname: [],
-      otherNames: [],
-      nin: [],
-      passportnumber: [],
-      datePassportIssue: [],
-      passportExpiration:[],
-      contactNumber: [],
-      gender: [],
-      dob: [],
-      religion: [],
-      maritalStatus: [],
-      qualification:[],
-      languages: [],
-      skills:[],
-      address: [],
-      physicalAddress:[],
-      kinRelationship:[],
-      numberOfNextOfKin: [],
-      nextOfKin:[],
-      gcc:[],
-      medicalCenter:[],
-      training:[],
-      vaccine:[],
-      agent:[],
-      remarks:[],
-      rDate:[],
-      tDate:[],
-      duration:[],
-      picture:[]
+      fname: ['', [Validators.required]],
+      lname: ['', [Validators.required]],
+      otherNames: [''],
+      nin: ['', [Validators.required, Validators.min(14)]],
+      passportnumber: ['', [Validators.required, Validators.min(9)]], // must start with an A
+      datePassportIssue: ['', [Validators.required]],
+      passportExpiration:['', Validators.required],// auto increment by 10 years
+      contactNumber: ['', Validators.required], // must start with 256
+      gender: ['', Validators.required],
+      dob: ['', Validators.required], // warn for age less than 21 years  or 21 not allowed
+      religion: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      qualification:['', Validators.required],
+      languages: ['', Validators.required],
+      skills:['', Validators.required],
+      address: [districts[0].city],
+      physicalAddress:['', Validators.required],
+      kinRelationship:['', Validators.required],
+      numberOfNextOfKin: ['', Validators.required],
+      nextOfKin:['', ['', Validators.required]],
+      gcc:['', Validators.required],
+      medicalCenter:['', Validators.required],
+      training:['', Validators.required],
+      vaccine:['', Validators.required],
+      agent:['', Validators.required],
+      remarks:['', Validators.required],
+      rDate:['', Validators.required],
+      tDate:['', Validators.required],
+      duration:['', Validators.required],
+      picture:['', Validators.required]
 
     })
    }
 
   ngOnInit(): void {
+    
+  }
+
+  submitForm(): void{
+    try{
+
+    }catch(e){
+
+    }
   }
 
 }

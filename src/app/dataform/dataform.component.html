@@ -24,6 +24,7 @@
                                 <mat-label>{{form.name}}</mat-label>
                                 <input matInput placeholder="Placeholder" [formControlName]="form.control">
                                 <!-- <mat-hint>Hint</mat-hint> -->
+                                
                               </mat-form-field>
                         </div>
                   </div>
@@ -45,49 +46,74 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Date Passport Issue*</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="datePassportIssue">
+                            <input matInput placeholder="Placeholder" formControlName="datePassportIssue" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                              </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
                     </div>
                   </div>
 
                   <div class="flex-bar">
                     <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
+                          <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Date Passport Expires*</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="passportExpiration">
+                            <input matInput placeholder="Placeholder" formControlName="passportExpiration" [matDatepicker]="passportExpirationPicker">
+                            <mat-datepicker-toggle matSuffix [for]="passportExpirationPicker">
+                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                              </mat-datepicker-toggle>
+                            <mat-datepicker #passportExpirationPicker></mat-datepicker>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Contact Number</mat-label>
+                            <span matPrefix>+256 &nbsp;</span>
                             <input matInput placeholder="Placeholder" formControlName="contactNumber">
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Gender</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="gender">
+        
+                            <mat-select formControlName="gender">
+                                <mat-option value="primary" *ngFor="let sex of gender" [value]="sex.value">{{sex.name}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                   </div>
 
                   <div class="flex-bar">
                     <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Date Of Birth</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="dob">
+                        
+                          <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Date Of Birth*</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="dob" [matDatepicker]="dobPicker">
+                            <mat-datepicker-toggle matSuffix [for]="dobPicker">
+                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                              </mat-datepicker-toggle>
+                            <mat-datepicker #dobPicker></mat-datepicker>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Religion</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="religion">
+                       
+                            <mat-select formControlName="religion">
+                                <mat-option value="primary" *ngFor="let item of religion" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Marital Status</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="maritalStatus">
+                            <mat-select formControlName="maritalStatus">
+                                <mat-option value="primary" *ngFor="let item of marriage" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                   </div>
@@ -96,7 +122,10 @@
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Address</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="address">
+                            <mat-select formControlName="address">
+                                <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                     <div class="w-50">
@@ -117,7 +146,11 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Relationship with Next of Kin</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="kinRelationship">
+                          
+                            <mat-select formControlName="kinRelationship">
+                                <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -132,7 +165,10 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>GCC</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="gcc">
+                            <mat-select formControlName="gcc">
+                                <mat-option value="primary" *ngFor="let item of gcc" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -144,7 +180,11 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Training</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="training">
+                          
+                            <mat-select formControlName="training">
+                                <mat-option value="primary" *ngFor="let item of gcc" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                   </div>
@@ -153,7 +193,10 @@
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Vaccine</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="vaccine">
+                            <mat-select formControlName="vaccine">
+                                <mat-option value="primary" *ngFor="let item of vaccine" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
                           </mat-form-field>
                     </div>
                     <div class="w-50">
@@ -179,21 +222,30 @@
 
                   <div class="flex-bar">
                     <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>R Date</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="rDate">
+                        
+                          <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>R Date*</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="rDate" [matDatepicker]="rDatePicker">
+                            <mat-datepicker-toggle matSuffix [for]="rDatePicker">
+                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                              </mat-datepicker-toggle>
+                            <mat-datepicker #rDatePicker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                          <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>T Date*</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="rDate" [matDatepicker]="tDatePicker">
+                            <mat-datepicker-toggle matSuffix [for]="tDatePicker">
+                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                              </mat-datepicker-toggle>
+                            <mat-datepicker #tDatePicker></mat-datepicker>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>T Date</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="tDate">
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Duration</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="duration">
+                            <mat-label>Duration (hrs)</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="duration" type="number">
                           </mat-form-field>
                     </div>
                   </div>
@@ -227,5 +279,6 @@
             </mat-card>
         </div>
     </div>
-    <button mat-raised-button color="primary" style="position: fixed; bottom: 100px;border-radius: 25px;right: 150px;padding-top: 2px;padding-bottom: 2px;">Submit Data</button>
+    <button mat-raised-button  style="background-color: #2563eb; position: fixed; bottom: 100px;border-radius: 25px;
+    right: 150px;padding-top: 2px;padding-bottom: 2px;color: #fff;">Submit Data</button>
 </main>
