@@ -17,14 +17,12 @@
                 <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
                 </div>
                 <br/>
-                <form [formGroup]="formGroup">
+                <form [formGroup]="mainformGroup">
                     <div class="flex-bar">
                         <div class="w-33" *ngFor="let form of form1">
                             <mat-form-field appearance="fill" class="full-width">
                                 <mat-label>{{form.name}}</mat-label>
                                 <input matInput placeholder="Placeholder" [formControlName]="form.control">
-                                <!-- <mat-hint>Hint</mat-hint> -->
-                                
                               </mat-form-field>
                         </div>
                   </div>
@@ -34,13 +32,25 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>NIN Number</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="nin">
-                          </mat-form-field>
+                            <input matInput placeholder="Placeholder" formControlName="nin" required minlength="12" maxlength="12">
+                           </mat-form-field>
+                           <mat-error *ngIf="errorController('nin')">
+                            Enter a correct NIN number and must be 12 characters
+                          </mat-error>
+                          <mat-error *ngIf="requiredError('nin')">
+                           Nin is <strong>required</strong>
+                          </mat-error>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Passport Number</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="passportnumber">
+                            <input matInput placeholder="Placeholder" formControlName="passportnumber" minlength="9" maxlength="9">
+                            <mat-error *ngIf="errorController('passportnumber')">
+                                Enter a correct passport number with 9 characters
+                              </mat-error>
+                              <mat-error *ngIf="requiredError('passportnumber')">
+                               Passport number is <strong>required</strong>
+                              </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -51,6 +61,9 @@
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                              <mat-error *ngIf="requiredError('datePassportIssue')">
+                               Nin is <strong>required</strong>
+                              </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -64,13 +77,22 @@
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
                             <mat-datepicker #passportExpirationPicker></mat-datepicker>
+                            <mat-error *ngIf="requiredError('passportExpiration')">
+                                Passport Expiration is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Contact Number</mat-label>
                             <span matPrefix>+256 &nbsp;</span>
-                            <input matInput placeholder="Placeholder" formControlName="contactNumber">
+                            <input matInput placeholder="Placeholder" formControlName="contactNumber" minlength="10" maxlength="10">
+                            <mat-error *ngIf="errorController('contactNumber')">
+                               Enter a correct telephone number
+                              </mat-error>
+                              <mat-error *ngIf="requiredError('contactNumber')">
+                               Phone number is <strong>required</strong>
+                              </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -81,6 +103,9 @@
                                 <mat-option value="primary" *ngFor="let sex of gender" [value]="sex.value">{{sex.name}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('gender')">
+                                Gender is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -95,6 +120,9 @@
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
                             <mat-datepicker #dobPicker></mat-datepicker>
+                            <mat-error *ngIf="requiredError('dob')">
+                                Date of birth is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -103,8 +131,10 @@
                        
                             <mat-select formControlName="religion">
                                 <mat-option value="primary" *ngFor="let item of religion" [value]="item">{{item}}</mat-option>
-                                
                               </mat-select>
+                              <mat-error *ngIf="requiredError('religion')">
+                                Religion is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -114,6 +144,9 @@
                                 <mat-option value="primary" *ngFor="let item of marriage" [value]="item">{{item}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('maritalStatus')">
+                                Marital status is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -124,14 +157,25 @@
                             <mat-label>Address</mat-label>
                             <mat-select formControlName="address">
                                 <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
-                                
                               </mat-select>
+                              <mat-error *ngIf="errorController('address')">
+                                Enter a correct address
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('address')">
+                                Address is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Physical Address</mat-label>
                             <input matInput placeholder="Placeholder" formControlName="physicalAddress">
+                            <mat-error *ngIf="errorController('physicalAddress')">
+                                Enter a correct Physical address
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('physicalAddress')">
+                                Physical address is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -141,6 +185,12 @@
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Next of Kin Name</mat-label>
                             <input matInput placeholder="Placeholder" formControlName="nextOfKin">
+                            <mat-error *ngIf="errorController('nextOfKin')">
+                                Enter valid next of kin name
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('nextOfKin')">
+                                Next of kin name is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -151,12 +201,21 @@
                                 <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('kinRelationship')">
+                                Next of kin relationship is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Number of Next of Kin</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin">
+                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="10" maxlength="10">
+                            <mat-error *ngIf="errorController('numberOfNextOfKin')">
+                                Enter a correct phone number
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('numberOfNextOfKin')">
+                                Next of kin telephone number <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -169,12 +228,21 @@
                                 <mat-option value="primary" *ngFor="let item of gcc" [value]="item">{{item}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('gcc')">
+                                GCC is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Medical Center</mat-label>
                             <input matInput placeholder="Placeholder" formControlName="medicalCenter">
+                            <mat-error *ngIf="errorController('medicalCenter')">
+                                Medical center must not include illegal characters
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('medicalCenter')">
+                                Medical center is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
@@ -185,6 +253,9 @@
                                 <mat-option value="primary" *ngFor="let item of gcc" [value]="item">{{item}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('training')">
+                                Training  is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -197,12 +268,21 @@
                                 <mat-option value="primary" *ngFor="let item of vaccine" [value]="item">{{item}}</mat-option>
                                 
                               </mat-select>
+                              <mat-error *ngIf="requiredError('training')">
+                              Vaccine  is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Agent</mat-label>
                             <input matInput placeholder="Placeholder" formControlName="agent">
+                            <mat-error *ngIf="errorController('agent')">
+                                Agent must not include illegal characters
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('agent')">
+                                Agent is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     
@@ -215,6 +295,12 @@
                             <textarea matInput placeholder="Placeholder" formControlName="remarks" cols="100">
 
                             </textarea>
+                            <mat-error *ngIf="errorController('remarks')">
+                                Remarks must not include illegal characters
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('remarks')">
+                                Remarks are <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -230,29 +316,41 @@
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
                             <mat-datepicker #rDatePicker></mat-datepicker>
+                            <mat-error *ngIf="requiredError('rDate')">
+                                R-date is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                           <mat-form-field appearance="fill" class="full-width">
                             <mat-label>T Date*</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="rDate" [matDatepicker]="tDatePicker">
+                            <input matInput placeholder="Placeholder" formControlName="tDate" [matDatepicker]="tDatePicker">
                             <mat-datepicker-toggle matSuffix [for]="tDatePicker">
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
                             <mat-datepicker #tDatePicker></mat-datepicker>
+                            <mat-error *ngIf="requiredError('tDate')">
+                                T-date is <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Duration (hrs)</mat-label>
                             <input matInput placeholder="Placeholder" formControlName="duration" type="number">
+                            <mat-error *ngIf="errorController('duration')">
+                                Duration must not include illegal characters
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('dutation')">
+                                Duration <strong>required</strong>
+                               </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
 
                 </form>
                 <section>
-                    <h3>Languages*</h3>
+                    <h3>Languages <small style="color: #9ca3af;">(Choose at least one)</small></h3>
                 <ul class="unordered-list">
                     <li *ngFor="let subtask of languages.subtasks">
                       <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
@@ -265,7 +363,7 @@
                 </section>
 <br/>
                 <section>
-                    <h3>Qualifications*</h3>
+                    <h3>Qualifications <small style="color: #9ca3af;">(Choose at least one)</small></h3>
                 <ul class="unordered-list">
                     <li *ngFor="let subtask of task.subtasks">
                       <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"

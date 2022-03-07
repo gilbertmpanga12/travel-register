@@ -74,7 +74,7 @@ export class DataformComponent implements OnInit {
     this.task.subtasks.forEach(t => (t.completed = completed));
   }
 
-  formGroup:FormGroup;
+  mainformGroup:FormGroup;
   form1: {name:string, control:string}[] = [{
     name:'First Name',
     control:'fname'
@@ -87,7 +87,7 @@ export class DataformComponent implements OnInit {
   }
 ];
   constructor(private _fb: FormBuilder) {
-    this.formGroup = this._fb.group({
+    this.mainformGroup = this._fb.group({
       fname: ['', [Validators.required]],
       lname: ['', [Validators.required]],
       otherNames: [''],
@@ -96,34 +96,34 @@ export class DataformComponent implements OnInit {
       datePassportIssue: ['', [Validators.required]],
       passportExpiration:['', Validators.required],// auto increment by 10 years
       contactNumber: ['', Validators.required], // must start with 256
-      gender: ['', Validators.required],
-      dob: ['', Validators.required], // warn for age less than 21 years  or 21 not allowed
-      religion: ['', Validators.required],
-      maritalStatus: ['', Validators.required],
-      qualification:['', Validators.required],
-      languages: ['', Validators.required],
-      skills:['', Validators.required],
+      gender: ['', [Validators.required]],
+      dob: ['', [Validators.required]], // warn for age less than 21 years  or 21 not allowed
+      religion: ['', [Validators.required]],
+      maritalStatus: ['', [Validators.required]],
+      qualification:['', [Validators.required]],
+      languages: ['', [Validators.required]],
+      skills:['', [Validators.required]],
       address: [districts[0].city],
-      physicalAddress:['', Validators.required],
-      kinRelationship:['', Validators.required],
-      numberOfNextOfKin: ['', Validators.required],
-      nextOfKin:['', ['', Validators.required]],
-      gcc:['', Validators.required],
-      medicalCenter:['', Validators.required],
-      training:['', Validators.required],
-      vaccine:['', Validators.required],
-      agent:['', Validators.required],
-      remarks:['', Validators.required],
-      rDate:['', Validators.required],
-      tDate:['', Validators.required],
-      duration:['', Validators.required],
-      picture:['', Validators.required]
+      physicalAddress:['', [Validators.required]],
+      kinRelationship:['', [Validators.required]],
+      numberOfNextOfKin: ['', [Validators.required]],
+      nextOfKin:['', [Validators.required]],
+      gcc:['', [Validators.required]],
+      medicalCenter:['', [Validators.required]],
+      training:['', [Validators.required]],
+      vaccine:['', [Validators.required]],
+      agent:['', [Validators.required]],
+      remarks:['', [Validators.required]],
+      rDate:['', [Validators.required]],
+      tDate:['', [Validators.required]],
+      duration:['', [Validators.required]],
+      picture:['', [Validators.required]]
 
     })
    }
 
   ngOnInit(): void {
-    
+
   }
 
   submitForm(): void{
@@ -132,6 +132,14 @@ export class DataformComponent implements OnInit {
     }catch(e){
 
     }
+  };
+
+  errorController(control: string){
+    return this.mainformGroup.touched && this.mainformGroup.get(control)?.invalid;
+  };
+
+  requiredError(control: string){
+    return  this.mainformGroup.touched && this.mainformGroup.get(control)?.hasError('required');
   }
 
 }
