@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import { districts } from './districts';
+import {MainService} from '../services/main.service';
+import Swal from 'sweetalert2';
 
 export interface Qualification {
   name: string;
@@ -78,7 +80,7 @@ export class DataformComponent implements OnInit {
     control:'otherNames'
   }
 ];
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private service: MainService) {
     this.mainformGroup = this._fb.group({
       fname: ['', [Validators.required]],
       lname: ['', [Validators.required]],
@@ -118,16 +120,25 @@ export class DataformComponent implements OnInit {
 
   }
 
-  submitForm(): void{
-    try{
-      const data  = this.mainformGroup.getRawValue();
-      data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
-      data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-      data['picture'] = 'N/A';
-      console.log(data);
-    }catch(e){
-
-    }
+  submitForm(){
+    const data  = this.mainformGroup.getRawValue();
+    data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
+    data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
+    data['picture'] = 'N/A';
+    this.service.storeDocuments(data).then(() => {
+    Swal.fire(
+        'Good job!',
+        'You data was saved',
+        'success'
+      );
+    }).catch(err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href="">Why do I have this issue?</a>'
+      });
+    });
   };
 
   errorController(control: string){

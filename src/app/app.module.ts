@@ -31,7 +31,9 @@ import { environment } from 'src/environments/environment';
 import { AngularFireStorageModule} from '@angular/fire/compat/storage';
 import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MainInterceptor } from './services/main';
+import { MainGuard } from './services/main.guard';
 
 
 @NgModule({
@@ -72,7 +74,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [MainGuard,  { provide: HTTP_INTERCEPTORS, useClass: MainInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

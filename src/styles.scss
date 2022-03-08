@@ -47,3 +47,25 @@ body { margin: 0; }
 .picture-box{
     width: 100px;height: 80px;border: 3px; border-style: dashed;border-radius: 3px;position: relative;border-color: #d1d5db;cursor: pointer;
 }
+
+// button spinners
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+  
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #047857;
+    animation: spinner .8s linear infinite;
+  }
+  

@@ -34,7 +34,9 @@
         class="mat-elevation-z4 
         text-white btn" 
        
-         mat-raised-button>Log in</button>
+         mat-raised-button>
+        <span [hidden]="service.isLoading">Log in</span>
+        </button>
       </div>
    
     </mat-card>
