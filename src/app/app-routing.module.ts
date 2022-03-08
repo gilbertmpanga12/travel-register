@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
+import { AuthformComponent } from './authform/authform.component';
 import { DataformComponent } from './dataform/dataform.component';
 import { HomeComponent } from './home/home.component';
 import { UserdataComponent } from './userdata/userdata.component';

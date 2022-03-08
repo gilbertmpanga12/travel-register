@@ -22,6 +22,17 @@ import { AuthComponent } from './auth/auth.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { AuthformComponent } from './authform/authform.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { AngularFireStorageModule} from '@angular/fire/compat/storage';
+import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +40,8 @@ import {MatSelectModule} from '@angular/material/select';
     HomeComponent,
     UserdataComponent,
     DataformComponent,
-    AuthComponent
+    AuthComponent,
+    AuthformComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +62,15 @@ import {MatSelectModule} from '@angular/material/select';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
+    AngularFirestoreModule,
+    MatSnackBarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
