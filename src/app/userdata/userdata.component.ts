@@ -22,6 +22,7 @@ viewFull:string;
 export class UserdataComponent implements AfterViewInit {
   displayedColumns: string[] = ['fullName', 'passportnumber', 'contactNumber', 'gender', 'viewFull'];
   dataSource!: MatTableDataSource<UserData>;
+  loading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,6 +34,7 @@ export class UserdataComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.afs.collection('userData').valueChanges().subscribe((data:any)=> {
+      this.loading=false;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

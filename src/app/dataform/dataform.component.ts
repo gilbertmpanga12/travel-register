@@ -83,7 +83,7 @@ export class DataformComponent implements OnInit {
     control:'otherNames'
   }
 ];
-  constructor(private _fb: FormBuilder, private service: MainService) {
+  constructor(private _fb: FormBuilder, public service: MainService) {
     this.mainformGroup = this._fb.group({
       fname: ['', [Validators.required]],
       lname: ['', [Validators.required]],
@@ -126,6 +126,7 @@ export class DataformComponent implements OnInit {
 
   async submitForm(){
     try{
+    this.service.isLoading =  true;
     const data  = this.mainformGroup.getRawValue();
     data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
     data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
@@ -135,7 +136,9 @@ export class DataformComponent implements OnInit {
         'You data was saved',
         'success'
       );
+      this.service.isLoading =  false;
     }catch(e){
+      this.service.isLoading =  false;
     Swal.fire({
         icon: 'error',
         title: 'Oops...',

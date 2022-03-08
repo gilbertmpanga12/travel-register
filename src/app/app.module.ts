@@ -36,6 +36,7 @@ import { MainInterceptor } from './services/main';
 import { MainGuard } from './services/main.guard';
 import { FullDetailsComponent } from './full-details/full-details.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     AngularFirestoreModule,
     MatSnackBarModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [MainGuard,  { provide: HTTP_INTERCEPTORS, useClass: MainInterceptor, multi: true }],
   bootstrap: [AppComponent]
