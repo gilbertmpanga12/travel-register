@@ -19,6 +19,8 @@ export interface Qualification {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  file:any;
+  avatar:any;
   loading: boolean = false;
   fileNumber: number = 223001;
   task: Qualification = {
@@ -111,7 +113,7 @@ export class DataformComponent implements OnInit {
       rDate:['', [Validators.required]],
       tDate:['', [Validators.required]],
       duration:['', [Validators.required]],
-      picture:['', [Validators.required]]
+      picture:['']
 
     })
    }
@@ -120,25 +122,25 @@ export class DataformComponent implements OnInit {
 
   }
 
-  submitForm(){
+  async submitForm(){
+    try{
     const data  = this.mainformGroup.getRawValue();
     data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
     data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-    data['picture'] = 'N/A';
-    this.service.storeDocuments(data).then(() => {
+    this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
     Swal.fire(
         'Good job!',
         'You data was saved',
         'success'
       );
-    }).catch(err => {
-      Swal.fire({
+    }catch(e){
+    Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
         footer: '<a href="">Why do I have this issue?</a>'
       });
-    });
+    }
   };
 
   errorController(control: string){
@@ -148,5 +150,30 @@ export class DataformComponent implements OnInit {
   requiredError(control: string){
     return  this.mainformGroup.touched && this.mainformGroup.get(control)?.hasError('required');
   }
+
+  uploadDocuments(event: any): void{
+    this.service.isLoading = true;
+    const eventFiles = event.target.files;
+    const file = eventFiles.item(0);
+    if (file!.type.split('/')[0] !== 'image') { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Upload only images please!'
+      });
+      return;
+    }
+    this.file = file;
+    console.log(this.file.name)
+    const reader = new FileReader();
+    reader.readAsDataURL(file); 
+    reader.onload = (_event) => { 
+      this.avatar = _event.target?.result; 
+    }
+   };
+
+   extractName(name:string): string{
+     return name.substring(0,name.indexOf('.'));
+   }
 
 }

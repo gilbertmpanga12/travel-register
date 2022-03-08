@@ -3,17 +3,20 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, finalize, Observable, of, tap } from 'rxjs';
+import firebase from '@firebase/app-compat';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
+  percentageChangesStatus: any;
   user!:  any;
   isLoading: boolean = false;
   private itemsCollection!: AngularFirestoreCollection<any>;
   constructor(private router: Router, private auth: AngularFireAuth, private http: HttpClient, 
-    private readonly afs: AngularFirestore,) {
+    private readonly afs: AngularFirestore,private storage: AngularFireStorage) {
     
     this.auth.authState.subscribe(user => {
       if (user){
@@ -62,5 +65,27 @@ export class MainService {
       throw e;
      }
   };
+
+  async startUpload(file: any, fileName: string, fileId: string,data:any) {
+    const userId:any = await firebase.auth().currentUser?.uid;
+     const filePath = `contracts_${userId}/${new Date().getTime()}_${file.name}`;
+     const fileRef = this.storage.ref(filePath);
+     const task = this.storage.upload(filePath, file);
+     this.percentageChangesStatus = task.percentageChanges();
+    
+     return task.snapshotChanges().pipe(
+       finalize(() => {
+         const downloadURL = fileRef.getDownloadURL();
+         downloadURL.subscribe(async (url: any) => {
+          this.itemsCollection.doc(this.userId).update({picture:downloadURL}).then(() =>{
+              this.storeDocuments(data).then(() => null).catch((e) => alert(e));
+          }).catch((err) => {
+            throw 'Something went wrong while updating data, try again!';
+          });
+         });
+
+       } )
+    ).subscribe();
+   }
 
 }

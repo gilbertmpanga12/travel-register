@@ -14,10 +14,17 @@
                 </div>
                 <br/>
                 <h3>Attach Picture*</h3>
-                <div class="picture-box">
+                <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
                     
                 <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
                 </div>
+
+                <img *ngIf="avatar" class="picture-avatar" (click)="ref.click()" [src]="avatar"/>
+
+                <input class="hidden" type="file" 
+          accept="image/png, image/jpg, image/jpeg"
+            id="form-uploader" #ref
+            (change)="uploadDocuments($event)">
                 <br/>
                 <form [formGroup]="mainformGroup">
                     <div class="flex-bar">

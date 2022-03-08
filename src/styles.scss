@@ -48,6 +48,18 @@ body { margin: 0; }
     width: 100px;height: 80px;border: 3px; border-style: dashed;border-radius: 3px;position: relative;border-color: #d1d5db;cursor: pointer;
 }
 
+.picture-avatar{
+    width: 100px;height: 80px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 3px;
+    background-size: cover;
+    margin-bottom: 10px;
+    border-style: dashed;
+    border-color: #d1d5db;
+    border-width: 3px;
+}
+
 // button spinners
 @keyframes spinner {
     to {transform: rotate(360deg);}
@@ -69,3 +81,6 @@ body { margin: 0; }
     animation: spinner .8s linear infinite;
   }
   
+  .hidden{
+      display: none;
+  }
