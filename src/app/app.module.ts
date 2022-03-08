@@ -34,6 +34,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MainInterceptor } from './services/main';
 import { MainGuard } from './services/main.guard';
+import { FullDetailsComponent } from './full-details/full-details.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { MainGuard } from './services/main.guard';
     UserdataComponent,
     DataformComponent,
     AuthComponent,
-    AuthformComponent
+    AuthformComponent,
+    FullDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { MainGuard } from './services/main.guard';
     AngularFireStorageModule,
     AngularFirestoreModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [MainGuard,  { provide: HTTP_INTERCEPTORS, useClass: MainInterceptor, multi: true }],
   bootstrap: [AppComponent]

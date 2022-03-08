@@ -58,6 +58,7 @@ export class DataformComponent implements OnInit {
   gcc: string[] = ['Not Yet', 'Booked', 'On Progress', 'Fit', 'Unfit'];
   training: string[] = ['Not yet', 'Approved', 'On training', 'Trained'];
   nextOfKeenRelationship: string[] = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
+  skills: string[] = ['Cooking', 'Ironing', 'Cleaning', 'Dusting', 'Washing', 'Baby sitting'];
   address = districts;
   allComplete: boolean = false;
   allCompleteLang: boolean = false;
@@ -113,7 +114,8 @@ export class DataformComponent implements OnInit {
       rDate:['', [Validators.required]],
       tDate:['', [Validators.required]],
       duration:['', [Validators.required]],
-      picture:['']
+      picture:[''],
+      otherSkills:['']
 
     })
    }

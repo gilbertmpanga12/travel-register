@@ -22,7 +22,7 @@ export class MainService {
       if (user){
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
-        this.itemsCollection = this.afs.collection<any>('travelData');
+        this.itemsCollection = this.afs.collection<any>('userData');
       };
     });
    }
@@ -68,7 +68,7 @@ export class MainService {
 
   async startUpload(file: any, fileName: string, fileId: string,data:any) {
     const userId:any = await firebase.auth().currentUser?.uid;
-     const filePath = `contracts_${userId}/${new Date().getTime()}_${file.name}`;
+     const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
      const fileRef = this.storage.ref(filePath);
      const task = this.storage.upload(filePath, file);
      this.percentageChangesStatus = task.percentageChanges();
@@ -76,8 +76,11 @@ export class MainService {
      return task.snapshotChanges().pipe(
        finalize(() => {
          const downloadURL = fileRef.getDownloadURL();
-         downloadURL.subscribe(async (url: any) => {
-          this.itemsCollection.doc(this.userId).update({picture:downloadURL}).then(() =>{
+         downloadURL.subscribe(async (url) => {
+           console.log('my data', data);
+           console.log('this url', url);
+          data.picture = url;
+          this.itemsCollection.doc(this.userId).set(data).then(() =>{
               this.storeDocuments(data).then(() => null).catch((e) => alert(e));
           }).catch((err) => {
             throw 'Something went wrong while updating data, try again!';
