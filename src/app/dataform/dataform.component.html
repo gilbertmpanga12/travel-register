@@ -361,7 +361,7 @@
                     <li *ngFor="let subtask of languages.subtasks">
                       <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
                                     [color]="subtask.color"
-                                    (ngModelChange)="updateAllComplete()">
+                                    (ngModelChange)="updateAllCompleteLang()">
                         {{subtask.name}}
                       </mat-checkbox>
                     </li>
@@ -384,5 +384,7 @@
         </div>
     </div>
     <button mat-raised-button  style="background-color: #2563eb; position: fixed; bottom: 100px;border-radius: 25px;
-    right: 150px;padding-top: 2px;padding-bottom: 2px;color: #fff;">Submit Data</button>
+    right: 150px;padding-top: 2px;padding-bottom: 2px;color: #fff;"
+    (click)="submitForm()"
+    >Submit Data</button>
 </main>

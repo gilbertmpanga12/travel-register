@@ -17,6 +17,7 @@ export interface Qualification {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  loading: boolean = false;
   fileNumber: number = 223001;
   task: Qualification = {
     name: 'Indeterminate',
@@ -55,25 +56,15 @@ export class DataformComponent implements OnInit {
   nextOfKeenRelationship: string[] = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
   address = districts;
   allComplete: boolean = false;
+  allCompleteLang: boolean = false;
   updateAllComplete() {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
-    console.log(this.allComplete)
   }
 
-  someComplete(): boolean {
-    if (this.task.subtasks == null) {
-      return false;
-    }
-    return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
+  updateAllCompleteLang() {
+    this.allCompleteLang = this.languages.subtasks != null && this.languages.subtasks.every(t => t.completed);
   }
 
-  setAll(completed: boolean) {
-    this.allComplete = completed;
-    if (this.task.subtasks == null) {
-      return;
-    }
-    this.task.subtasks.forEach(t => (t.completed = completed));
-  }
 
   mainformGroup:FormGroup;
   form1: {name:string, control:string}[] = [{
@@ -129,7 +120,11 @@ export class DataformComponent implements OnInit {
 
   submitForm(): void{
     try{
-
+      const data  = this.mainformGroup.getRawValue();
+      data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
+      data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
+      data['picture'] = 'N/A';
+      console.log(data);
     }catch(e){
 
     }

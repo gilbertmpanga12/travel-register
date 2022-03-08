@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%;font-family: 'Poppins', sans-serif !important;color: #111827 !important; }
-body { margin: 0; font-family: 'Poppins', sans-serif !important; color: #111827 !important;}
-h1,h2,h3,h4,h5,h6,p,div,small,span{
-    font-family: 'Poppins', sans-serif !important;
+html, body { height: 100%; }
+body { margin: 0;}
+
+.gray-900{
+    color: #111827 !important;
 }
 
 .flex{
