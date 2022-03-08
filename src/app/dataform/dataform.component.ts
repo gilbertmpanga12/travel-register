@@ -119,7 +119,7 @@ export class DataformComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+    this.fileNumber++;
   }
 
   async submitForm(){
@@ -176,4 +176,19 @@ export class DataformComponent implements OnInit {
      return name.substring(0,name.indexOf('.'));
    }
 
+   resetForm(){
+     Swal.fire({
+      title: 'Are you sure you want to reset form?',
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.mainformGroup.reset();
+        this.avatar = null;
+      } else if (result.isDenied) {
+       console.log('denied')
+      }
+    })
+   }
 }

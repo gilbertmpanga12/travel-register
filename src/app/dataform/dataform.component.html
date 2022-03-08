@@ -8,9 +8,13 @@
         <br/>
         <div class="card-wrapper">
             <mat-card class="full-width">
-                <div>
+                <div style="position: relative;">
                     <h3><small style="color: #9ca3af;">File Number</small> > <span class="gray-900">{{fileNumber}}</span></h3>
+                    <button
+                    (click)="resetForm()"
+                    mat-stroked-button color="accent" style="position: absolute;right: 7px;top:-2px"><mat-icon>refresh</mat-icon>Reset</button>
                     <mat-divider></mat-divider>
+                    
                 </div>
                 <br/>
                 <h3>Attach Picture*</h3>
