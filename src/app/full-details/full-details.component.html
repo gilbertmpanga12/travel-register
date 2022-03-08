@@ -3,7 +3,59 @@
 <br/>
 <br/>
 <mat-dialog-content class="mat-typography">
-  {{data | json}}
+ <p style="text-align: center;">
+  <img  class="picture-avatar"  [src]="data?.picture" />
+ </p>
+  <mat-list role="list" style="width: 450px;">
+    <mat-list-item role="listitem"><strong>Agent: </strong>&nbsp;&nbsp;&nbsp;{{data?.agent}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Name: </strong>&nbsp;&nbsp;&nbsp;{{data?.fname}} {{data?.lname}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Passport number: </strong>&nbsp;&nbsp;&nbsp;{{data?.passportnumber}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Qualification: </strong>&nbsp;&nbsp;&nbsp;{{data?.qualification}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Other Names: </strong>&nbsp;&nbsp;&nbsp;{{data?.otherNames}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>GCC: </strong>&nbsp;&nbsp;&nbsp;{{data?.gcc}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Kin Relationship: </strong>&nbsp;&nbsp;&nbsp;{{data?.kinRelationship}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Next Of Kin: </strong>&nbsp;&nbsp;&nbsp;{{data?.nextOfKin}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Date of Birth: </strong>&nbsp;&nbsp;&nbsp;{{data?.dob.seconds * 1000 | date:'medium'}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Medical Center: </strong>&nbsp;&nbsp;&nbsp;{{data?.medicalCenter}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Marital Status: </strong>&nbsp;&nbsp;&nbsp;{{data?.maritalStatus}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Nin: </strong>&nbsp;&nbsp;&nbsp;{{data?.nin}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Address: </strong>&nbsp;&nbsp;&nbsp;{{data?.address}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Gender: </strong>&nbsp;&nbsp;&nbsp;{{data?.gender}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Date PassportIssue: </strong>&nbsp;&nbsp;&nbsp;{{data?.datePassportIssue.seconds * 1000 | date:'medium'}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Physical Address: </strong>&nbsp;&nbsp;&nbsp;{{data?.physicalAddress}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Languages: </strong>&nbsp;&nbsp;&nbsp;{{data?.languages}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>ContactNumber </strong>&nbsp;&nbsp;&nbsp;{{data?.contactNumber}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>R Date: </strong>&nbsp;&nbsp;&nbsp;{{data?.rDate.seconds * 1000 | date:'medium'}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>T Date: </strong>&nbsp;&nbsp;&nbsp;{{data?.tDate.seconds * 1000 | date:'medium'}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Number Of Next Of Kin: </strong>&nbsp;&nbsp;&nbsp;{{data?.numberOfNextOfKin}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Passport Expiration: </strong>&nbsp;&nbsp;&nbsp;{{data?.passportExpiration.seconds * 1000 | date:'medium'}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Skills: </strong>&nbsp;&nbsp;&nbsp;{{data?.skills}}</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item role="listitem"><strong>Duration: </strong>&nbsp;&nbsp;&nbsp;{{data?.duration}}</mat-list-item>
+   
+  </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
