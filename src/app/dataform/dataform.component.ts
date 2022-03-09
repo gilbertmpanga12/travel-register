@@ -4,6 +4,7 @@ import {ThemePalette} from '@angular/material/core';
 import { districts } from './districts';
 import {MainService} from '../services/main.service';
 import Swal from 'sweetalert2';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export interface Qualification {
   name: string;
@@ -83,27 +84,27 @@ export class DataformComponent implements OnInit {
     control:'otherNames'
   }
 ];
-  constructor(private _fb: FormBuilder, public service: MainService) {
+  constructor(private _fb: FormBuilder, public service: MainService, private afs: AngularFirestore) {
     this.mainformGroup = this._fb.group({
       fname: ['', [Validators.required]],
       lname: ['', [Validators.required]],
       otherNames: [''],
-      nin: ['', [Validators.required, Validators.min(14)]],
-      passportnumber: ['', [Validators.required, Validators.min(9)]], // must start with an A
+      nin: ['', [Validators.required, Validators.minLength(14)]],
+      passportnumber: ['', [Validators.required, Validators.minLength(9)]], // must start with an A
       datePassportIssue: ['', [Validators.required]],
-      passportExpiration:['', Validators.required],// auto increment by 10 years
-      contactNumber: ['', Validators.required], // must start with 256
+      passportExpiration:['', [Validators.required]],// auto increment by 10 years
+      contactNumber: ['', [Validators.required, Validators.minLength(9)]], // must start with 256
       gender: ['', [Validators.required]],
       dob: ['', [Validators.required]], // warn for age less than 21 years  or 21 not allowed
       religion: ['', [Validators.required]],
       maritalStatus: ['', [Validators.required]],
-      qualification:['', [Validators.required]],
-      languages: ['', [Validators.required]],
-      skills:['', [Validators.required]],
+      qualification:[''],
+      languages: [''],
+      skills:[''],
       address: [districts[0].city],
       physicalAddress:['', [Validators.required]],
       kinRelationship:['', [Validators.required]],
-      numberOfNextOfKin: ['', [Validators.required]],
+      numberOfNextOfKin: ['', [Validators.required, Validators.minLength(9)]],
       nextOfKin:['', [Validators.required]],
       gcc:['', [Validators.required]],
       medicalCenter:['', [Validators.required]],
@@ -115,30 +116,45 @@ export class DataformComponent implements OnInit {
       tDate:['', [Validators.required]],
       duration:['', [Validators.required]],
       picture:[''],
-      otherSkills:['']
+      otherSkills:[''],
+      pageNumber: [0]
 
     })
    }
 
   ngOnInit(): void {
-    this.fileNumber++;
   }
 
   async submitForm(){
     try{
-    this.service.isLoading =  true;
-    const data  = this.mainformGroup.getRawValue();
-    data['languages'] = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
-    data['qualification'] = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-    this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
-    Swal.fire(
-        'Good job!',
-        'You data was saved',
-        'success'
-      );
-      this.service.isLoading =  false;
+      const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
+      const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
+      if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0){
+      this.service.isLoading =  true;
+      const data  = this.mainformGroup.getRawValue();
+      data['languages'] = languages;
+      data['qualification'] = qualifications;
+      data['uid'] = this.afs.createId();
+      data['contactNumber'] ='+256'+data['contactNumber'];
+      data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+      this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
+      Swal.fire(
+          'Good job!',
+          'You data was saved',
+          'success'
+        );
+        this.service.isLoading =  false;
+        this.mainformGroup.reset();
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Warning',
+        text: 'You have missing fields, make sure all fields are filled in'
+      });
+    }
     }catch(e){
       this.service.isLoading =  false;
+      this.avatar = null;
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -157,7 +173,6 @@ export class DataformComponent implements OnInit {
   }
 
   uploadDocuments(event: any): void{
-    this.service.isLoading = true;
     const eventFiles = event.target.files;
     const file = eventFiles.item(0);
     if (file!.type.split('/')[0] !== 'image') { 
@@ -169,7 +184,6 @@ export class DataformComponent implements OnInit {
       return;
     }
     this.file = file;
-    console.log(this.file.name)
     const reader = new FileReader();
     reader.readAsDataURL(file); 
     reader.onload = (_event) => { 

@@ -51,10 +51,10 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>NIN Number</mat-label>
-                            <input matInput placeholder="E.g CF9202010320H" formControlName="nin"  minlength="12" maxlength="12">
+                            <input matInput placeholder="E.g CF9202010320H" formControlName="nin"  minlength="14" maxlength="14">
                            </mat-form-field>
                            <mat-error *ngIf="errorController('nin')">
-                            Enter a correct NIN number and must be 12 characters
+                            Enter a correct NIN number and must be 14 characters
                           </mat-error>
                           <mat-error *ngIf="requiredError('nin')">
                            Nin is <strong>required</strong>
@@ -81,7 +81,7 @@
                               </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                               <mat-error *ngIf="requiredError('datePassportIssue')">
-                               Nin is <strong>required</strong>
+                               Date passport issue is <strong>required</strong>
                               </mat-error>
                           </mat-form-field>
                     </div>
@@ -105,7 +105,7 @@
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Contact Number</mat-label>
                             <span matPrefix>+256 &nbsp;</span>
-                            <input matInput placeholder="E.g 785442772" formControlName="contactNumber" minlength="10" maxlength="10">
+                            <input matInput placeholder="E.g 785442772" formControlName="contactNumber" minlength="9" maxlength="9" type="number">
                             <mat-error *ngIf="errorController('contactNumber')">
                                Enter a correct telephone number
                               </mat-error>
@@ -228,7 +228,8 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Number of Next of Kin</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="10" maxlength="10">
+                            <span matPrefix>+256</span>
+                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="number">
                             <mat-error *ngIf="errorController('numberOfNextOfKin')">
                                 Enter a correct phone number
                                </mat-error>
@@ -371,7 +372,7 @@
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Skills</mat-label>
-                            <mat-select formControlName="address">
+                            <mat-select formControlName="address" formControlName="skills">
                                 <mat-option value="primary" *ngFor="let item of skills" [value]="item">{{item}}</mat-option>
                               </mat-select>
                              

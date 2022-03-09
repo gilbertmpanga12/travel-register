@@ -12,17 +12,19 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 })
 export class MainService {
   percentageChangesStatus: any;
+  
   user!:  any;
   isLoading: boolean = false;
   private itemsCollection!: AngularFirestoreCollection<any>;
+  private pageNumber!: AngularFirestoreCollection<any>;
   constructor(private router: Router, private auth: AngularFireAuth, private http: HttpClient, 
     private readonly afs: AngularFirestore,private storage: AngularFireStorage) {
-    
     this.auth.authState.subscribe(user => {
       if (user){
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
         this.itemsCollection = this.afs.collection<any>('userData');
+        this.pageNumber = this.afs.collection<any>('pageNumber');
       };
     });
    }
@@ -66,6 +68,15 @@ export class MainService {
      }
   };
 
+  async incrementPageNumber(){
+    try{
+      const increment = firebase.firestore.FieldValue.increment(1);
+      return await this.pageNumber.doc('page').update({page: increment});
+     }catch(e){
+      throw e;
+     }
+  }
+
   async startUpload(file: any, fileName: string, fileId: string,data:any) {
     const userId:any = await firebase.auth().currentUser?.uid;
      const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
@@ -77,11 +88,17 @@ export class MainService {
        finalize(() => {
          const downloadURL = fileRef.getDownloadURL();
          downloadURL.subscribe(async (url) => {
-           console.log('my data', data);
-           console.log('this url', url);
           data.picture = url;
-          this.itemsCollection.doc(this.userId).set(data).then(() =>{
-              this.storeDocuments(data).then(() => null).catch((e) => alert(e));
+          this.itemsCollection.doc(data.uid).set(data).then(() =>{
+              this.storeDocuments(data).then(() => {
+                this.incrementPageNumber().then(() => {
+                  this.pageNumber.doc('page').get().forEach(doc => {
+                    console.log('my docc',doc.data())
+                    const item = doc.data().page;
+                    this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>null).catch(e => console.log(e));
+                  });
+                });
+              }).catch((e) => alert(e));
           }).catch((err) => {
             throw 'Something went wrong while updating data, try again!';
           });
