@@ -123,8 +123,12 @@ export class DataformComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.afs.collection('pageNumber').doc('page').valueChanges().forEach((doc:any) => {
+      this.fileNumber = doc?.page;
+    });
   }
 
+  
   async submitForm(){
     try{
       const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
@@ -143,6 +147,7 @@ export class DataformComponent implements OnInit {
           'You data was saved',
           'success'
         );
+        this.avatar = null;
         this.service.isLoading =  false;
         this.mainformGroup.reset();
     }else{
