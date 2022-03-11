@@ -157,7 +157,8 @@ export class DataformComponent implements OnInit {
     try{
       const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-      if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0){
+      const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
+      if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0&&skills!.length>0){
       this.service.isLoading =  true;
       const data  = this.mainformGroup.getRawValue();
       data['languages'] = languages;
@@ -165,6 +166,9 @@ export class DataformComponent implements OnInit {
       data['uid'] = this.afs.createId();
       data['contactNumber'] ='+256'+data['contactNumber'];
       data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+      data['otherLang'] = this.otherLang;
+      data['otherSkills']=this.otherSkills;
+      data['remarks']=this.remarks;
       this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
       Swal.fire(
           'Good job!',
