@@ -19,22 +19,38 @@
                 <br/>
                 <h3>Attach Picture*</h3>
                 <div class="flex-row">
-                  <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
-                    
-                    <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
-                    </div>
+
+                  <div>
+                    <label style="font-weight: 400;margin-bottom: 8px;" class="gray-900"><small>Full Photo</small></label>
                     <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
                     
                       <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
                       </div>
+                  </div>
+                  <div>
+                    <label style="font-weight: 400;margin-bottom: 8px;" class="gray-900"><small>Small Photo</small></label>
+                    <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    
+                      <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      </div>
+                  </div>
+                    <div>
+                      <label style="font-weight: 400;margin-bottom: 8px;" class="gray-900"><small>Passport</small></label>
                       <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
                     
                         <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
                         </div>
-                        <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    </div>
+                      
+
+                        <div>
+                          
+                          <label style="font-weight: 400;margin-bottom: 8px;" class="gray-900"><small>Resume</small></label>
+                          <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
                     
-                          <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
-                          </div>
+                            <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                            </div>
+                        </div>
                 </div>
 
                 <img *ngIf="avatar" class="picture-avatar" (click)="ref.click()" [src]="avatar"/>
@@ -129,6 +145,19 @@
                           </mat-form-field>
                     </div>
                     <div class="w-33">
+                      <mat-form-field appearance="fill" class="full-width">
+                          <mat-label>Alternative Number</mat-label>
+                          <span matPrefix>+256 &nbsp;</span>
+                          <input matInput placeholder="E.g 785442772" formControlName="altNumber" minlength="9" maxlength="9" type="number">
+                          <mat-error *ngIf="errorController('altNumber')">
+                             Enter a correct telephone number
+                            </mat-error>
+                            <mat-error *ngIf="requiredError('altNumber')">
+                              Alt Numbernumber is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                  </div>
+                    <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Gender</mat-label>
         
@@ -148,7 +177,9 @@
                         
                           <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Date Of Birth*</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="dob" [matDatepicker]="dobPicker">
+                            <input matInput placeholder="Placeholder" formControlName="dob" 
+                            [min]="minDate" [max]="maxDate"
+                            [matDatepicker]="dobPicker">
                             <mat-datepicker-toggle matSuffix [for]="dobPicker">
                                 <mat-icon matDatepickerToggleIcon>event</mat-icon>
                               </mat-datepicker-toggle>
@@ -184,34 +215,7 @@
                     </div>
                   </div>
 
-                  <div class="flex-bar">
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Address</mat-label>
-                            <mat-select formControlName="address">
-                                <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
-                              </mat-select>
-                              <mat-error *ngIf="errorController('address')">
-                                Enter a correct address
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('address')">
-                                Address is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Physical Address</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="physicalAddress">
-                            <mat-error *ngIf="errorController('physicalAddress')">
-                                Enter a correct Physical address
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('physicalAddress')">
-                                Physical address is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                  </div>
+                  
 
                   <div class="flex-bar">
                     <div class="w-33">
@@ -252,6 +256,19 @@
                                </mat-error>
                           </mat-form-field>
                     </div>
+                    <div class="w-50">
+                      <mat-form-field appearance="fill" class="full-width">
+                          <mat-label>Number of Next of Kin Alternative number</mat-label>
+                          <span matPrefix>+256</span>
+                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="number">
+                          <mat-error *ngIf="errorController('kinAltNumber')">
+                              Enter a correct phone number
+                             </mat-error>
+                             <mat-error *ngIf="requiredError('kinAltNumber')">
+                              Next of kin alternative telephone number <strong>required</strong>
+                             </mat-error>
+                        </mat-form-field>
+                  </div>
                   </div>
 
                   <div class="flex-bar">
@@ -322,22 +339,7 @@
                     
                   </div>
 
-                  <div class="flex-bar">
-                    <div style="width: 100% !important;">
-                        <mat-form-field appearance="fill" style="width: 70% !important;">
-                            <mat-label>Remarks</mat-label>
-                            <textarea matInput placeholder="" formControlName="remarks" cols="100">
-
-                            </textarea>
-                            <mat-error *ngIf="errorController('remarks')">
-                                Remarks must not include illegal characters
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('remarks')">
-                                Remarks are <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                  </div>
+                  
 
 
                   <div class="flex-bar">
@@ -381,29 +383,56 @@
                           </mat-form-field>
                     </div>
                   </div>
-
                   <div class="flex-bar">
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Skills</mat-label>
-                            <mat-select formControlName="address" formControlName="skills">
-                                <mat-option value="primary" *ngFor="let item of skills" [value]="item">{{item}}</mat-option>
+                            <mat-label>Address</mat-label>
+                            <mat-select formControlName="address">
+                                <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
                               </mat-select>
-                             
+                              <mat-error *ngIf="errorController('address')">
+                                Enter a correct address
+                               </mat-error>
                                <mat-error *ngIf="requiredError('address')">
-                                Skills are <strong>required</strong>
+                                Address is <strong>required</strong>
                                </mat-error>
                           </mat-form-field>
                     </div>
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Other Skills</mat-label>
-                            <input matInput placeholder="(Optional)" formControlName="otherSkills" type="text">
-                           </mat-form-field>
+                            <mat-label>Physical Address</mat-label>
+                            <input matInput placeholder="Placeholder" formControlName="physicalAddress">
+                            <mat-error *ngIf="errorController('physicalAddress')">
+                                Enter a correct Physical address
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('physicalAddress')">
+                                Physical address is <strong>required</strong>
+                               </mat-error>
+                          </mat-form-field>
                     </div>
                   </div>
-
                 </form>
+                <section>
+                  <h3>Skills <small style="color: #9ca3af;">(Choose at least one)</small></h3>
+              <ul class="unordered-list">
+                  <li *ngFor="let subtask of task.subtasks">
+                    <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
+                                  [color]="subtask.color"
+                                  (ngModelChange)="updateAllComplete()">
+                      {{subtask.name}}
+                    </mat-checkbox>
+                  </li>
+                </ul><br/>
+                <div class="flex-bar">
+                    
+                  <div style="width: 100%;">
+                      <mat-form-field appearance="fill" class="full-width">
+                          <mat-label>Other Skills</mat-label>
+                          <input matInput placeholder="(Optional)" name="otherSkills" [(ngModel)]="otherSkills" type="text">
+                         </mat-form-field>
+                  </div>
+                </div>
+              </section><br/>
                 <section>
                     <h3>Languages <small style="color: #9ca3af;">(Choose at least one)</small></h3>
                 <ul class="unordered-list">
@@ -415,7 +444,21 @@
                       </mat-checkbox>
                     </li>
                   </ul>
-                </section>
+                  <br/>
+                  <div class="flex-bar">
+                    <div style="width: 100%;">
+                      <h3>Other Languages</h3>
+                      <mat-form-field appearance="fill" class="full-width">
+                          <mat-label>(Optional)</mat-label>
+                          <input matInput placeholder="" name="otherLang" [(ngModel)]="otherLang">
+                         
+                            <mat-error>
+                              Other language required <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                  </div>
+                  </div>
+                </section><br/>
 <br/>
                 <section>
                     <h3>Qualifications <small style="color: #9ca3af;">(Choose at least one)</small></h3>
@@ -428,6 +471,19 @@
                       </mat-checkbox>
                     </li>
                   </ul>
+                </section><br/>
+                <section>
+                  <div class="flex-bar">
+                    <div style="width: 100% !important;">
+                        <mat-form-field appearance="fill" style="width: 100% !important;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput placeholder="" name="remarks" cols="100" [(ngModel)]="remarks">
+
+                            </textarea>
+                            
+                          </mat-form-field>
+                    </div>
+                  </div>
                 </section>
             </mat-card>
         </div>

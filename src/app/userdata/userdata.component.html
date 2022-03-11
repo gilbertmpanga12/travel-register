@@ -7,12 +7,16 @@
         </div>
         <br/>
         <div class="card-wrapper">
-            <mat-form-field appearance="standard">
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Search e.g Susan Ahebwa" #input autofocus>
-              </mat-form-field>
+           
               
               <div class="mat-elevation-z8">
+                <div style="width: 98%;padding-left: 10px;padding-right: 10px;padding-top: 10px;">
+                  <mat-form-field appearance="outline">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label>Filter docs</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search e.g Susan Ahebwa" #input autofocus>
+                  </mat-form-field>
+                </div>
                 <table mat-table [dataSource]="dataSource" matSort>
               
                   <!-- ID Column -->

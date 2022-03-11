@@ -20,6 +20,8 @@ export interface Qualification {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  minDate: Date;
+  maxDate: Date;
   file:any;
   avatar:any;
   loading: boolean = false;
@@ -38,6 +40,9 @@ export class DataformComponent implements OnInit {
       {name: 'Master', completed: false, color: 'warn'}
     ],
   };
+  otherLang:string='';
+  otherSkills:string='';
+  remarks: string='';
   languages: Qualification = {
     name: 'Indeterminate',
     completed: false,
@@ -56,7 +61,7 @@ export class DataformComponent implements OnInit {
   vaccine: string[] = ['Not yet', 'One Dose', 'Two Doses', 'Certified', 'Ready'];
   gcc: string[] = ['Not Yet', 'Booked', 'On Progress', 'Fit', 'Unfit'];
   training: string[] = ['Not yet', 'Approved', 'On training', 'Trained'];
-  nextOfKeenRelationship: string[] = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
+  nextOfKeenRelationship: string[] = ['Relative','Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
   skills: string[] = ['Cooking', 'Ironing', 'Cleaning', 'Dusting', 'Washing', 'Baby sitting'];
   address = districts;
   allComplete: boolean = false;
@@ -83,6 +88,9 @@ export class DataformComponent implements OnInit {
   }
 ];
   constructor(private _fb: FormBuilder, public service: MainService, private afs: AngularFirestore) {
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 90, 11, 31);
+    this.maxDate = new Date(currentYear - 21, 11, 31);//currentYear + 1000, 11, 31 
     this.mainformGroup = this._fb.group({
       fname: ['', [Validators.required]],
       lname: ['', [Validators.required]],
@@ -92,6 +100,8 @@ export class DataformComponent implements OnInit {
       datePassportIssue: ['', [Validators.required]],
       passportExpiration:['', [Validators.required]],// auto increment by 10 years
       contactNumber: ['', [Validators.required, Validators.minLength(9)]], // must start with 256
+      altNumber:['', [Validators.minLength(9)]],
+      kinAltNumber: ['',[Validators.minLength(9)]],
       gender: ['', [Validators.required]],
       dob: ['', [Validators.required]], // warn for age less than 21 years  or 21 not allowed
       religion: ['', [Validators.required]],
@@ -109,12 +119,10 @@ export class DataformComponent implements OnInit {
       training:['', [Validators.required]],
       vaccine:['', [Validators.required]],
       agent:['', [Validators.required]],
-      remarks:['', [Validators.required]],
-      rDate:['', [Validators.required]],
-      tDate:['', [Validators.required]],
+      rDate:[''],
+      tDate:[''],
       duration:['', [Validators.required]],
       picture:[''],
-      otherSkills:[''],
       pageNumber: [0]
 
     })
