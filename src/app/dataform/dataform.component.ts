@@ -31,7 +31,7 @@ export class DataformComponent implements OnInit {
     subtasks: [
       {name: 'PLE', completed: false, color: 'primary'},
       {name: 'UCE', completed: false, color: 'accent'},
-      {name: 'Warn', completed: false, color: 'warn'},
+      {name: 'UACE', completed: false, color: 'warn'},
       {name: 'Diploma', completed: false, color: 'warn'},
       {name: 'Certificate', completed: false, color: 'warn'},
       {name: 'Degree', completed: false, color: 'warn'},
@@ -43,16 +43,14 @@ export class DataformComponent implements OnInit {
     completed: false,
     color: 'primary',
     subtasks: [
-      {name: 'English', completed: false, color: 'primary'},
-      {name: 'Luganda', completed: false, color: 'accent'},
-      {name: 'Runyankole', completed: false, color: 'warn'},
-      {name: 'Acholi', completed: false, color: 'warn'},
+      {name: 'Local', completed: false, color: 'primary'},
+      {name: 'Arabic', completed: false, color: 'accent'},
       {name: 'Swahili', completed: false, color: 'warn'},
-      {name: 'Lusoga', completed: false, color: 'warn'},
-      {name: 'Others', completed: false, color: 'warn'}
+      {name: 'Acholi', completed: false, color: 'warn'},
+      {name: 'French', completed: false, color: 'warn'}
     ],
   };
-  gender: any[] = [{name:'CF', value:'Female'}, {name:'CM',value:'Male'}];// 
+  gender: any[] = [{name:'Female', value:'Female'}, {name:'Male',value:'Male'}];// 
   marriage: string[] = ['Single', 'Married'];
   religion: string[] = ['Christian', 'Muslim'];
   vaccine: string[] = ['Not yet', 'One Dose', 'Two Doses', 'Certified', 'Ready'];

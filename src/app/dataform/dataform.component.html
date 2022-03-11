@@ -18,9 +18,23 @@
                 </div>
                 <br/>
                 <h3>Attach Picture*</h3>
-                <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                <div class="flex-row">
+                  <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
                     
-                <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                    <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                    </div>
+                    <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    
+                      <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      </div>
+                      <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    
+                        <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                        </div>
+                        <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    
+                          <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                          </div>
                 </div>
 
                 <img *ngIf="avatar" class="picture-avatar" (click)="ref.click()" [src]="avatar"/>
