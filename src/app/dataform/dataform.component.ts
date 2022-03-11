@@ -40,6 +40,20 @@ export class DataformComponent implements OnInit {
       {name: 'Master', completed: false, color: 'warn'}
     ],
   };
+  //   skills: string[] = ['', '', '', '', '', ''];
+  skills: Qualification = {
+    name: 'Indeterminate',
+    completed: false,
+    color: 'primary',
+    subtasks: [
+      {name: 'Cooking', completed: false, color: 'primary'},
+      {name: 'Ironing', completed: false, color: 'accent'},
+      {name: 'Cleaning', completed: false, color: 'warn'},
+      {name: 'Dusting', completed: false, color: 'warn'},
+      {name: 'Washing', completed: false, color: 'warn'},
+      {name: 'Baby sitting', completed: false, color: 'warn'}
+    ],
+  }
   otherLang:string='';
   otherSkills:string='';
   remarks: string='';
@@ -62,16 +76,20 @@ export class DataformComponent implements OnInit {
   gcc: string[] = ['Not Yet', 'Booked', 'On Progress', 'Fit', 'Unfit'];
   training: string[] = ['Not yet', 'Approved', 'On training', 'Trained'];
   nextOfKeenRelationship: string[] = ['Relative','Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
-  skills: string[] = ['Cooking', 'Ironing', 'Cleaning', 'Dusting', 'Washing', 'Baby sitting'];
   address = districts;
   allComplete: boolean = false;
   allCompleteLang: boolean = false;
+  allCompleSkills: boolean = false;
   updateAllComplete() {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
   }
 
   updateAllCompleteLang() {
     this.allCompleteLang = this.languages.subtasks != null && this.languages.subtasks.every(t => t.completed);
+  }
+
+  updateAllCompleteSkills() {
+    this.allCompleSkills = this.skills.subtasks != null && this.skills.subtasks.every(t => t.completed);
   }
 
 

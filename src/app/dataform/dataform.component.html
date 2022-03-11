@@ -416,10 +416,10 @@
                 <section>
                   <h3>Skills <small style="color: #9ca3af;">(Choose at least one)</small></h3>
               <ul class="unordered-list">
-                  <li *ngFor="let subtask of task.subtasks">
+                  <li *ngFor="let subtask of skills.subtasks">
                     <mat-checkbox [(ngModel)]="subtask.completed" style="width: 200px !important;"
                                   [color]="subtask.color"
-                                  (ngModelChange)="updateAllComplete()">
+                                  (ngModelChange)="updateAllCompleteSkills()">
                       {{subtask.name}}
                     </mat-checkbox>
                   </li>
