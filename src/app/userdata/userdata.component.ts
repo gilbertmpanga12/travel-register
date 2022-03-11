@@ -20,7 +20,7 @@ viewFull:string;
   templateUrl: './userdata.component.html',
 })
 export class UserdataComponent implements AfterViewInit {
-  displayedColumns: string[] = ['fullName', 'passportnumber', 'contactNumber', 'gender', 'viewFull'];
+  displayedColumns: string[] = ['pageNumber','fullName', 'passportnumber', 'contactNumber', 'gender', 'viewFull'];
   dataSource!: MatTableDataSource<UserData>;
   loading: boolean = true;
 
