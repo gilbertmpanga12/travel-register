@@ -20,11 +20,14 @@
                 <h3>Attach Picture*</h3>
                 <div class="flex-row">
 
-                  <div>
+                  <div class="relative">
                     <label style="font-weight: 400;margin-bottom: 8px;font-size: 13px;" class="gray-900">Full Photo</label>
                     <div class="picture-box"  (click)="fullPhoto.click()">
                     
                       <mat-icon  *ngIf="!fullPhotoUrl" style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      
+                     <!-- <mat-icon color="primary" style="position: absolute;top:-1%;">remove_circle</mat-icon> -->
+
                       <img *ngIf="fullPhotoUrl" class="picture-avatar" [src]="fullPhotoUrl"/>
                       </div>
                   </div>
@@ -502,7 +505,7 @@
                     <div style="width: 100% !important;">
                         <mat-form-field appearance="fill" style="width: 100% !important;">
                             <mat-label>Remarks</mat-label>
-                            <textarea matInput placeholder="" name="remarks" cols="100" [(ngModel)]="remarks">
+                            <textarea matInput placeholder="" name="remarks" cols="100" [(ngModel)]="remarks" type="text">
 
                             </textarea>
                             

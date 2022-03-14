@@ -135,7 +135,6 @@ export class DataformComponent implements OnInit {
       dob: ['', [Validators.required]],
       religion: ['', [Validators.required]],
       maritalStatus: ['', [Validators.required]],
-      CheckItem:[''],
       languages: [''],
       skills:[''],
       address: [districts[0].city],
@@ -170,46 +169,36 @@ export class DataformComponent implements OnInit {
       const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
-      const data  = this.mainformGroup.getRawValue();
-      data['languages'] = languages;
-      data['qualifications'] = qualifications;
-      data['uid'] = this.afs.createId();
-      data['contactNumber'] ='+256'+data['contactNumber'];
-      data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-      data['otherLang'] = this.otherLang;
-      data['otherSkills']=this.otherSkills;
-      data['remarks']=this.remarks;
-      data['skills']=skills;
       if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
-        console.log('CAN NOW SUBMIT');
-        // this.service.isLoading =  true;
-        // const data  = this.mainformGroup.getRawValue();
-        // data['languages'] = languages;
-        // data['qualification'] = qualifications;
-        // data['uid'] = this.afs.createId();
-        // data['contactNumber'] ='+256'+data['contactNumber'];
-        // data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-        // data['otherLang'] = this.otherLang;
-        // data['otherSkills']=this.otherSkills;
-        // data['remarks']=this.remarks;
-        // this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
-        //   Swal.fire(
-        //     'Good job!',
-        //     'You data was saved',
-        //     'success'
-        //   );
-        //   this.fullPhotoUrl = null;
-        //   this.smallPhotoUrl=null;
-        //   this.passportUrl=null;
-        //   this.resumeUrl=null;
-        //   this.mainformGroup.reset();
-        // }).catch(err => {
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Warning',
-        //     text: 'You have missing fields, make sure all fields are filled in'
-        //   });
-        // });
+        this.service.isLoading =  true;
+        const data  = this.mainformGroup.getRawValue();
+        data['languages'] = languages;
+        data['qualification'] = qualifications;
+        data['uid'] = this.afs.createId();
+        data['contactNumber'] ='+256'+data['contactNumber'];
+        data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+        data['otherLang'] = this.otherLang;
+        data['otherSkills']=this.otherSkills;
+        data['remarks']=this.remarks;
+        data['skills']=skills;
+        this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
+          Swal.fire(
+            'Good job!',
+            'You data was saved',
+            'success'
+          );
+          this.fullPhotoUrl = null;
+          this.smallPhotoUrl=null;
+          this.passportUrl=null;
+          this.resumeUrl=null;
+          this.mainformGroup.reset();
+        }).catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Warning',
+            text: 'You have missing fields, make sure all fields are filled in'
+          });
+        });
         
       }else{
         Swal.fire({
