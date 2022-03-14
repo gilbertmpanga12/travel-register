@@ -105,6 +105,15 @@ export class DataformComponent implements OnInit {
     control:'otherNames'
   }
 ];
+ fullPhoto!: File;
+ smallPhoto!: File;
+ passport!: File;
+ resume!: File;
+
+ fullPhotoUrl: any;
+ smallPhotoUrl: any;
+ passportUrl: any;
+ resumeUrl: any;
   constructor(private _fb: FormBuilder, public service: MainService, private afs: AngularFirestore) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 11, 31);
@@ -155,36 +164,38 @@ export class DataformComponent implements OnInit {
   
   async submitForm(){
     try{
-      const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
-      const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-      const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
-      if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0&&skills!.length>0){
-      this.service.isLoading =  true;
-      const data  = this.mainformGroup.getRawValue();
-      data['languages'] = languages;
-      data['qualification'] = qualifications;
-      data['uid'] = this.afs.createId();
-      data['contactNumber'] ='+256'+data['contactNumber'];
-      data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-      data['otherLang'] = this.otherLang;
-      data['otherSkills']=this.otherSkills;
-      data['remarks']=this.remarks;
-      this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
-      Swal.fire(
-          'Good job!',
-          'You data was saved',
-          'success'
-        );
-        this.avatar = null;
-        this.service.isLoading =  false;
-        this.mainformGroup.reset();
-    }else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Warning',
-        text: 'You have missing fields, make sure all fields are filled in'
-      });
-    }
+      const hasAllPhotos = this.fullPhoto && this.smallPhoto && this.resume && this.passport;
+      console.log(hasAllPhotos)
+    //   const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
+    //   const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
+    //   const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
+    //   if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0&&skills!.length>0){
+    //   this.service.isLoading =  true;
+    //   const data  = this.mainformGroup.getRawValue();
+    //   data['languages'] = languages;
+    //   data['qualification'] = qualifications;
+    //   data['uid'] = this.afs.createId();
+    //   data['contactNumber'] ='+256'+data['contactNumber'];
+    //   data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+    //   data['otherLang'] = this.otherLang;
+    //   data['otherSkills']=this.otherSkills;
+    //   data['remarks']=this.remarks;
+    //   this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
+    //   Swal.fire(
+    //       'Good job!',
+    //       'You data was saved',
+    //       'success'
+    //     );
+    //     this.avatar = null;
+    //     this.service.isLoading =  false;
+    //     this.mainformGroup.reset();
+    // }else{
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Warning',
+    //     text: 'You have missing fields, make sure all fields are filled in'
+    //   });
+    // }
     }catch(e){
       this.service.isLoading =  false;
       this.avatar = null;
@@ -205,24 +216,65 @@ export class DataformComponent implements OnInit {
     return  this.mainformGroup.touched && this.mainformGroup.get(control)?.hasError('required');
   }
 
-  uploadDocuments(event: any): void{
+  uploadDocuments(event: any, type:string): void{
     const eventFiles = event.target.files;
     const file = eventFiles.item(0);
-    if (file!.type.split('/')[0] !== 'image') { 
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Upload only images please!'
-      });
-      return;
-    }
-    this.file = file;
+    // if (file!.type.split('/')[0] !== 'image' || file!.type.split('/')[0] !== 'document') { 
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Upload only images please!'
+    //   });
+    //   return;
+    // }
+    this.togglePhotoTypes(file,type);
+    
+   };
+
+   togglePhotoTypes(file:File,type:string): void{
+     console.log(type)
+    switch(type){
+      case 'fullPhoto':
+        this.fullPhoto = file;
     const reader = new FileReader();
     reader.readAsDataURL(file); 
     reader.onload = (_event) => { 
-      this.avatar = _event.target?.result; 
+      this.fullPhotoUrl = _event.target?.result; 
     }
-   };
+        break;
+      case 'smallPhoto':
+        this.smallPhoto = file;
+        const readerSmall = new FileReader();
+        readerSmall.readAsDataURL(file); 
+        readerSmall.onload = (_event) => { 
+          this.smallPhotoUrl = _event.target?.result; 
+        }
+        break;
+      case 'passportPhoto':
+        this.passport = file;
+        const readerPassport = new FileReader();
+        readerPassport.readAsDataURL(file); 
+        readerPassport.onload = (_event) => { 
+          this.passportUrl = _event.target?.result; 
+        }
+        break;
+      case 'resume':
+        
+        this.resume = file;
+        const readerResume = new FileReader();
+        readerResume.readAsDataURL(file); 
+        readerResume.onload = (_event) => { 
+          this.resumeUrl = _event.target?.result; 
+        }
+        break;
+      default:
+        Swal.fire({
+          icon: 'error',
+          title: 'Warning',
+          text: 'Something went wrong try again uploading pictures'
+        });
+    }
+   }
 
    extractName(name:string): string{
      return name.substring(0,name.indexOf('.'));

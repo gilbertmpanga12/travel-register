@@ -22,24 +22,27 @@
 
                   <div>
                     <label style="font-weight: 400;margin-bottom: 8px;font-size: 13px;" class="gray-900">Full Photo</label>
-                    <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    <div class="picture-box"  (click)="fullPhoto.click()">
                     
-                      <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      <mat-icon  *ngIf="!fullPhotoUrl" style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      <img *ngIf="fullPhotoUrl" class="picture-avatar" [src]="fullPhotoUrl"/>
                       </div>
                   </div>
                   <div>
                     <label style="font-weight: 400;margin-bottom: 8px;font-size: 13px;" class="gray-900">Small Photo</label>
-                    <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                    <div class="picture-box"  (click)="smallPhoto.click()">
                     
-                      <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      <mat-icon *ngIf="!smallPhotoUrl" style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                      <img *ngIf="smallPhotoUrl" class="picture-avatar" [src]="smallPhotoUrl"/>
                       </div>
                   </div>
                     <div>
    
                       <label style="font-weight: 400;margin-bottom: 8px;font-size: 13px;" class="gray-900">Passport</label>
-                      <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
+                      <div class="picture-box" (click)="passportPhoto.click()">
                     
-                        <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                        <mat-icon *ngIf="!passportUrl"  style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                        <img *ngIf="passportUrl" class="picture-avatar"  [src]="passportUrl"/>
                         </div>
                     </div>
                       
@@ -47,19 +50,40 @@
                         <div>
                           
                           <label style="font-weight: 400;margin-bottom: 8px;font-size: 13px;" class="gray-900">Resume</label>
-                          <div class="picture-box" *ngIf="!avatar" (click)="ref.click()">
-                    
-                            <mat-icon style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                          <div class="picture-box" (click)="resume.click()">
+                     <mat-icon  *ngIf="!resumeUrl" style="margin: 23% 33%;font-size: 35px;color: #d1d5db;">photo_camera</mat-icon>
+                           <span *ngIf="resumeUrl">
+                            <mat-icon   style="font-size: 34px;margin-left: 25%;margin-top: 17%; color: #2563eb;"
+                            
+                            >description</mat-icon>
+                          <span style="color: #2563eb;padding-top: 35px;padding-left: 6px;">(1)</span>
+                           </span>
                             </div>
                         </div>
                 </div>
 
-                <img *ngIf="avatar" class="picture-avatar" (click)="ref.click()" [src]="avatar"/>
+           
+             
+               
+            
 
                 <input class="hidden" type="file" 
           accept="image/png, image/jpg, image/jpeg"
-            id="form-uploader" #ref
-            (change)="uploadDocuments($event)">
+            id="form-uploader" #fullPhoto
+            (change)="uploadDocuments($event, 'fullPhoto')">
+            <input class="hidden" type="file" 
+          accept="image/png, image/jpg, image/jpeg"
+            id="form-uploader" #smallPhoto
+            (change)="uploadDocuments($event, 'smallPhoto')">
+            <input class="hidden" type="file" 
+          accept="image/png, image/jpg, image/jpeg"
+            id="form-uploader" #passportPhoto
+            (change)="uploadDocuments($event, 'passportPhoto')">
+
+            <input class="hidden" type="file" 
+          accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+            id="form-uploader" #resume
+            (change)="uploadDocuments($event, 'resume')">
                 <br/>
                 <form [formGroup]="mainformGroup">
                     <div class="flex-bar">
