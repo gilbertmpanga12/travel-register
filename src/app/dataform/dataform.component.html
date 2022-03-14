@@ -218,59 +218,7 @@
 
                   
 
-                  <div class="flex-bar">
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Next of Kin Name</mat-label>
-                            <input matInput placeholder="E.g John Doe" formControlName="nextOfKin">
-                            <mat-error *ngIf="errorController('nextOfKin')">
-                                Enter valid next of kin name
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('nextOfKin')">
-                                Next of kin name is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Relationship with Next of Kin</mat-label>
-                          
-                            <mat-select formControlName="kinRelationship">
-                                <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
-                                
-                              </mat-select>
-                              <mat-error *ngIf="requiredError('kinRelationship')">
-                                Next of kin relationship is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Number of Next of Kin</mat-label>
-                            <span matPrefix>+256</span>
-                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="number">
-                            <mat-error *ngIf="errorController('numberOfNextOfKin')">
-                                Enter a correct phone number
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('numberOfNextOfKin')">
-                                Next of kin telephone number <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-50">
-                      <mat-form-field appearance="fill" class="full-width">
-                          <mat-label>Number of Next of Kin Alternative number</mat-label>
-                          <span matPrefix>+256</span>
-                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="number">
-                          <mat-error *ngIf="errorController('kinAltNumber')">
-                              Enter a correct phone number
-                             </mat-error>
-                             <mat-error *ngIf="requiredError('kinAltNumber')">
-                              Next of kin alternative telephone number <strong>required</strong>
-                             </mat-error>
-                        </mat-form-field>
-                  </div>
-                  </div>
+                
 
                   <div class="flex-bar">
                     <div class="w-33">
@@ -339,7 +287,59 @@
                     </div>
                     
                   </div>
-
+                  <div class="flex-bar">
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Next of Kin Name</mat-label>
+                            <input matInput placeholder="E.g John Doe" formControlName="nextOfKin">
+                            <mat-error *ngIf="errorController('nextOfKin')">
+                                Enter valid next of kin name
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('nextOfKin')">
+                                Next of kin name is <strong>required</strong>
+                               </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Relationship with Next of Kin</mat-label>
+                          
+                            <mat-select formControlName="kinRelationship">
+                                <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
+                                
+                              </mat-select>
+                              <mat-error *ngIf="requiredError('kinRelationship')">
+                                Next of kin relationship is <strong>required</strong>
+                               </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-33">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Number of Next of Kin</mat-label>
+                            <span matPrefix>+256</span>
+                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="number">
+                            <mat-error *ngIf="errorController('numberOfNextOfKin')">
+                                Enter a correct phone number
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('numberOfNextOfKin')">
+                                Next of kin telephone number <strong>required</strong>
+                               </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-50">
+                      <mat-form-field appearance="fill" class="full-width">
+                          <mat-label>Number of Next of Kin Alternative number</mat-label>
+                          <span matPrefix>+256</span>
+                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="number">
+                          <mat-error *ngIf="errorController('kinAltNumber')">
+                              Enter a correct phone number
+                             </mat-error>
+                             <mat-error *ngIf="requiredError('kinAltNumber')">
+                              Next of kin alternative telephone number <strong>required</strong>
+                             </mat-error>
+                        </mat-form-field>
+                  </div>
+                  </div>
                   
 
 

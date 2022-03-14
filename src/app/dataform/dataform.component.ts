@@ -40,7 +40,7 @@ export class DataformComponent implements OnInit {
       {name: 'Master', completed: false, color: 'warn'}
     ],
   };
-  //   skills: string[] = ['', '', '', '', '', ''];
+
   skills: Qualification = {
     name: 'Indeterminate',
     completed: false,
@@ -65,7 +65,7 @@ export class DataformComponent implements OnInit {
       {name: 'Local', completed: false, color: 'primary'},
       {name: 'Arabic', completed: false, color: 'accent'},
       {name: 'Swahili', completed: false, color: 'warn'},
-      {name: 'Acholi', completed: false, color: 'warn'},
+      {name: 'English', completed: false, color: 'warn'},
       {name: 'French', completed: false, color: 'warn'}
     ],
   };
