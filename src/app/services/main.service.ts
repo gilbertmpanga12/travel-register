@@ -11,8 +11,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   providedIn: 'root'
 })
 export class MainService {
+  allFiles: any[] = [];
   percentageChangesStatus: any;
-  
   user!:  any;
   isLoading: boolean = false;
   private itemsCollection!: AngularFirestoreCollection<any>;
@@ -77,31 +77,45 @@ export class MainService {
      }
   }
 
-  async startUpload(file: any, fileName: string, fileId: string,data:any) {
+  async uploadNow(files:any[],data:any){
+    for(let file of  files){
+        this.startUpload(file,data);
+    }
+  }
+
+  async startUpload(file: any,data:any) {
     const userId:any = await firebase.auth().currentUser?.uid;
-     const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
-     const fileRef = this.storage.ref(filePath);
-     const task = this.storage.upload(filePath, file);
+    const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
      this.percentageChangesStatus = task.percentageChanges();
     
      return task.snapshotChanges().pipe(
        finalize(() => {
          const downloadURL = fileRef.getDownloadURL();
          downloadURL.subscribe(async (url) => {
-          data.picture = url;
-          this.itemsCollection.doc(data.uid).set(data).then(() =>{
+          this.allFiles.push(url);
+          if(this.allFiles.length===4){
+            data['picture']=this.allFiles;
+            return this.itemsCollection.doc(data.uid).set(data).then(() =>{
               this.storeDocuments(data).then(() => {
                 this.incrementPageNumber().then(() => {
                   this.pageNumber.doc('page').get().forEach(doc => {
-                    console.log('my docc',doc.data())
                     const item = doc.data().page;
                     this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>null).catch(e => console.log(e));
+                    this.isLoading =  false;
+                    return true;
                   });
                 });
-              }).catch((e) => alert(e));
+              }).catch((e) => {
+                this.isLoading =  false;
+                alert(e)});
           }).catch((err) => {
+            this.isLoading =  false;
             throw 'Something went wrong while updating data, try again!';
           });
+          }
+
          });
 
        } )

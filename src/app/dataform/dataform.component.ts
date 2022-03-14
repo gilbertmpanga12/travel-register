@@ -6,11 +6,11 @@ import {MainService} from '../services/main.service';
 import Swal from 'sweetalert2';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-export interface Qualification {
+export interface CheckItem {
   name: string;
   completed: boolean;
   color: ThemePalette;
-  subtasks?: Qualification[];
+  subtasks?: CheckItem[];
 }
 
 
@@ -26,7 +26,7 @@ export class DataformComponent implements OnInit {
   avatar:any;
   loading: boolean = false;
   fileNumber: number = 223001;
-  task: Qualification = {
+  task: CheckItem = {
     name: 'Indeterminate',
     completed: false,
     color: 'primary',
@@ -41,7 +41,9 @@ export class DataformComponent implements OnInit {
     ],
   };
 
-  skills: Qualification = {
+ 
+
+  skills: CheckItem = {
     name: 'Indeterminate',
     completed: false,
     color: 'primary',
@@ -57,7 +59,7 @@ export class DataformComponent implements OnInit {
   otherLang:string='';
   otherSkills:string='';
   remarks: string='';
-  languages: Qualification = {
+  languages: CheckItem = {
     name: 'Indeterminate',
     completed: false,
     color: 'primary',
@@ -126,14 +128,14 @@ export class DataformComponent implements OnInit {
       passportnumber: ['', [Validators.required, Validators.minLength(9)]], // must start with an A
       datePassportIssue: ['', [Validators.required]],
       passportExpiration:['', [Validators.required]],// auto increment by 10 years
-      contactNumber: ['', [Validators.required, Validators.minLength(9)]], // must start with 256
+      contactNumber: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]], // must start with 256
       altNumber:['', [Validators.minLength(9)]],
       kinAltNumber: ['',[Validators.minLength(9)]],
       gender: ['', [Validators.required]],
-      dob: ['', [Validators.required]], // warn for age less than 21 years  or 21 not allowed
+      dob: ['', [Validators.required]],
       religion: ['', [Validators.required]],
       maritalStatus: ['', [Validators.required]],
-      qualification:[''],
+      CheckItem:[''],
       languages: [''],
       skills:[''],
       address: [districts[0].city],
@@ -164,38 +166,59 @@ export class DataformComponent implements OnInit {
   
   async submitForm(){
     try{
-      const hasAllPhotos = this.fullPhoto && this.smallPhoto && this.resume && this.passport;
-      console.log(hasAllPhotos)
-    //   const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
-    //   const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
-    //   const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
-    //   if(this.mainformGroup.valid && !!this.avatar && languages!.length>0 && qualifications!.length>0&&skills!.length>0){
-    //   this.service.isLoading =  true;
-    //   const data  = this.mainformGroup.getRawValue();
-    //   data['languages'] = languages;
-    //   data['qualification'] = qualifications;
-    //   data['uid'] = this.afs.createId();
-    //   data['contactNumber'] ='+256'+data['contactNumber'];
-    //   data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-    //   data['otherLang'] = this.otherLang;
-    //   data['otherSkills']=this.otherSkills;
-    //   data['remarks']=this.remarks;
-    //   this.service.startUpload(this.file,this.file?.name,this.extractName(this.file?.name),data);
-    //   Swal.fire(
-    //       'Good job!',
-    //       'You data was saved',
-    //       'success'
-    //     );
-    //     this.avatar = null;
-    //     this.service.isLoading =  false;
-    //     this.mainformGroup.reset();
-    // }else{
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Warning',
-    //     text: 'You have missing fields, make sure all fields are filled in'
-    //   });
-    // }
+      const hasAllPhotos = !!this.fullPhoto && !!this.smallPhoto && !!this.resume && !!this.passport;
+      const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
+      const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
+      const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
+      const data  = this.mainformGroup.getRawValue();
+      data['languages'] = languages;
+      data['qualifications'] = qualifications;
+      data['uid'] = this.afs.createId();
+      data['contactNumber'] ='+256'+data['contactNumber'];
+      data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+      data['otherLang'] = this.otherLang;
+      data['otherSkills']=this.otherSkills;
+      data['remarks']=this.remarks;
+      data['skills']=skills;
+      if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
+        console.log('CAN NOW SUBMIT');
+        // this.service.isLoading =  true;
+        // const data  = this.mainformGroup.getRawValue();
+        // data['languages'] = languages;
+        // data['qualification'] = qualifications;
+        // data['uid'] = this.afs.createId();
+        // data['contactNumber'] ='+256'+data['contactNumber'];
+        // data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+        // data['otherLang'] = this.otherLang;
+        // data['otherSkills']=this.otherSkills;
+        // data['remarks']=this.remarks;
+        // this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
+        //   Swal.fire(
+        //     'Good job!',
+        //     'You data was saved',
+        //     'success'
+        //   );
+        //   this.fullPhotoUrl = null;
+        //   this.smallPhotoUrl=null;
+        //   this.passportUrl=null;
+        //   this.resumeUrl=null;
+        //   this.mainformGroup.reset();
+        // }).catch(err => {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: 'Warning',
+        //     text: 'You have missing fields, make sure all fields are filled in'
+        //   });
+        // });
+        
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Warning',
+          text: 'You have missing fields, make sure all fields are filled in'
+        });
+      }
+
     }catch(e){
       this.service.isLoading =  false;
       this.avatar = null;

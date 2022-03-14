@@ -160,7 +160,7 @@
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Contact Number</mat-label>
                             <span matPrefix>+256 &nbsp;</span>
-                            <input matInput placeholder="E.g 785442772" formControlName="contactNumber" minlength="9" maxlength="9" type="number">
+                            <input matInput placeholder="E.g 785442772" formControlName="contactNumber" minlength="9" maxlength="9" type="tel">
                             <mat-error *ngIf="errorController('contactNumber')">
                                Enter a correct telephone number
                               </mat-error>
@@ -173,7 +173,7 @@
                       <mat-form-field appearance="fill" class="full-width">
                           <mat-label>Alternative Number</mat-label>
                           <span matPrefix>+256 &nbsp;</span>
-                          <input matInput placeholder="E.g 785442772" formControlName="altNumber" minlength="9" maxlength="9" type="number">
+                          <input matInput placeholder="E.g 785442772" formControlName="altNumber" minlength="9" maxlength="9" type="tel">
                           <mat-error *ngIf="errorController('altNumber')">
                              Enter a correct telephone number
                             </mat-error>
@@ -340,8 +340,8 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Number of Next of Kin</mat-label>
-                            <span matPrefix>+256</span>
-                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="number">
+                            <span matPrefix>+256&nbsp;</span>
+                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="tel">
                             <mat-error *ngIf="errorController('numberOfNextOfKin')">
                                 Enter a correct phone number
                                </mat-error>
@@ -353,8 +353,8 @@
                     <div class="w-50">
                       <mat-form-field appearance="fill" class="full-width">
                           <mat-label>Number of Next of Kin Alternative number</mat-label>
-                          <span matPrefix>+256</span>
-                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="number">
+                          <span matPrefix>+256&nbsp;</span>
+                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="tel">
                           <mat-error *ngIf="errorController('kinAltNumber')">
                               Enter a correct phone number
                              </mat-error>
