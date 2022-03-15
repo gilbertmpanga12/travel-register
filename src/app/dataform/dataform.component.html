@@ -369,48 +369,6 @@
                   </div>
                   
 
-
-                  <div class="flex-bar">
-                    <div class="w-33">
-                        
-                          <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>R Date*</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="rDate" [matDatepicker]="rDatePicker">
-                            <mat-datepicker-toggle matSuffix [for]="rDatePicker">
-                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
-                              </mat-datepicker-toggle>
-                            <mat-datepicker #rDatePicker></mat-datepicker>
-                            <mat-error *ngIf="requiredError('rDate')">
-                                R-date is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                          <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>T Date*</mat-label>
-                            <input matInput placeholder="E.g 12/2/2020" formControlName="tDate" [matDatepicker]="tDatePicker">
-                            <mat-datepicker-toggle matSuffix [for]="tDatePicker">
-                                <mat-icon matDatepickerToggleIcon>event</mat-icon>
-                              </mat-datepicker-toggle>
-                            <mat-datepicker #tDatePicker></mat-datepicker>
-                            <mat-error *ngIf="requiredError('tDate')">
-                                T-date is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Duration (hrs)</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="duration" type="number">
-                            <mat-error *ngIf="errorController('duration')">
-                                Duration must not include illegal characters
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('dutation')">
-                                Duration <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                  </div>
                   <div class="flex-bar">
                     <div class="w-50">
                         <mat-form-field appearance="fill" class="full-width">
@@ -499,6 +457,52 @@
                       </mat-checkbox>
                     </li>
                   </ul>
+                </section><br/>
+                <section>
+
+                  <form [formGroup]="durationGroup">
+                    <div class="flex-bar">
+                      <div class="w-33">
+                          
+                            <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>R Date*</mat-label>
+                              <input matInput placeholder="Placeholder" formControlName="rDate"  [matDatepicker]="rDatePicker">
+                              <mat-datepicker-toggle matSuffix [for]="rDatePicker">
+                                  <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                                </mat-datepicker-toggle>
+                              <mat-datepicker #rDatePicker></mat-datepicker>
+                              <mat-error *ngIf="requiredError('rDate')">
+                                  R-date is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-33">
+                            <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>T Date*</mat-label>
+                              <input matInput placeholder="E.g 12/2/2020" formControlName="tDate"  [matDatepicker]="tDatePicker">
+                              <mat-datepicker-toggle matSuffix [for]="tDatePicker">
+                                  <mat-icon matDatepickerToggleIcon>event</mat-icon>
+                                </mat-datepicker-toggle>
+                              <mat-datepicker #tDatePicker></mat-datepicker>
+                              <mat-error *ngIf="requiredError('tDate')">
+                                  T-date is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-33">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Duration (days passed)</mat-label>
+                              <input matInput placeholder="Placeholder" formControlName="duration" type="number">
+                              <mat-error *ngIf="errorController('duration')">
+                                  Duration must not include illegal characters
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('dutation')">
+                                  Duration <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                    </div>
+                  </form>
                 </section><br/>
                 <section>
                   <div class="flex-bar">

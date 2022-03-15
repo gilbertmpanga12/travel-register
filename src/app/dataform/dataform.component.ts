@@ -59,6 +59,9 @@ export class DataformComponent implements OnInit {
   otherLang:string='';
   otherSkills:string='';
   remarks: string='';
+  rDate: string='';
+  tDate: string='';
+  duration: string='';
   languages: CheckItem = {
     name: 'Indeterminate',
     completed: false,
@@ -96,6 +99,7 @@ export class DataformComponent implements OnInit {
 
 
   mainformGroup:FormGroup;
+  durationGroup: FormGroup;
   form1: {name:string, control:string}[] = [{
     name:'First Name',
     control:'fname'
@@ -147,19 +151,32 @@ export class DataformComponent implements OnInit {
       training:['', [Validators.required]],
       vaccine:['', [Validators.required]],
       agent:['', [Validators.required]],
-      rDate:[''],
-      tDate:[''],
-      duration:['', [Validators.required]],
       picture:[''],
       pageNumber: [0]
 
-    })
+    });
+    this.durationGroup = this._fb.group({
+      tDate:[''],
+      rDate: [''],
+      duration: ['']
+    });
+
+    
    }
 
   ngOnInit(): void {
     this.afs.collection('pageNumber').doc('page').valueChanges().forEach((doc:any) => {
       this.fileNumber = doc?.page;
     });
+    this.durationGroup.valueChanges.subscribe(data => {
+      if(data['tDate'] && data['rDate']){
+        const tDate = new Date(data['tDate']).getTime(), rDate = new Date(data['rDate']).getTime();
+        const diff = tDate-rDate;
+        const diffInDays= diff/ (1000 * 3600 * 24);
+        this.durationGroup.get('duration')?.setValue(`${diffInDays}`,{emitEvent: false});
+      }
+    });
+
   }
 
   
@@ -172,6 +189,7 @@ export class DataformComponent implements OnInit {
       if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
         this.service.isLoading =  true;
         const data  = this.mainformGroup.getRawValue();
+        const durationData = this.durationGroup.getRawValue();
         data['languages'] = languages;
         data['qualification'] = qualifications;
         data['uid'] = this.afs.createId();
@@ -181,6 +199,9 @@ export class DataformComponent implements OnInit {
         data['otherSkills']=this.otherSkills;
         data['remarks']=this.remarks;
         data['skills']=skills;
+        data['tDate']=durationData['tDate'];
+        data['rDate']=durationData['rDate'];
+        data['duration']=durationData['duration'];
         this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
           Swal.fire(
             'Good job!',
