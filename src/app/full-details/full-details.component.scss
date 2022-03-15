@@ -5,3 +5,19 @@ strong{
 .mat-list-item{
     width: 100% !important;
 }
+
+.download-btn{
+    color:#10b981;text-decoration: none;text-align: center;display: flex;
+}
+
+.image{
+    width: 150px;height: 80px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 3px;
+    background-size: cover;
+    margin-bottom: 10px;
+  
+    border-color: #d1d5db;
+    border-width: 3px;
+}
