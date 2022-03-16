@@ -37,6 +37,7 @@ import { MainGuard } from './services/main.guard';
 import { FullDetailsComponent } from './full-details/full-details.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DataformComponent,
     AuthComponent,
     AuthformComponent,
-    FullDetailsComponent
+    FullDetailsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

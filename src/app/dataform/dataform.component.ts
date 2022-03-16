@@ -6,6 +6,7 @@ import {MainService} from '../services/main.service';
 import Swal from 'sweetalert2';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+
 export interface CheckItem {
   name: string;
   completed: boolean;
@@ -20,9 +21,10 @@ export interface CheckItem {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  defaultBottomBorderColor:string='#6b7280';
   moreThan90Days: boolean=true;
   defaultRangeBgColor: string = '#f3f4f6';
-  defaultTextColor: string='#111827';
+  defaultTextColor: string='';
   statusColors={
     daysLess60:'#10b981',
     range6181:'#eab308',
@@ -200,16 +202,19 @@ export class DataformComponent implements OnInit {
         this.defaultRangeBgColor=this.statusColors.moreThan90;
         this.defaultTextColor='#f8fafc';
         this.moreThan90Days=false;
+        this.defaultBottomBorderColor='#991b1b';
         return;
       };
       if(days < 60){
         this.defaultRangeBgColor=this.statusColors.daysLess60;
         this.defaultTextColor='#f8fafc';
+        this.defaultBottomBorderColor='#047857';
         return;
       };
       if(days > 61 || days <= 89){
         this.defaultRangeBgColor=this.statusColors.range6181;
         this.defaultTextColor='#f8fafc';
+        this.defaultBottomBorderColor='#ca8a04';
         return;
       };
      
@@ -409,4 +414,5 @@ export class DataformComponent implements OnInit {
       }
     })
    }
+
 }

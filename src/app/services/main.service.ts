@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { catchError, finalize, Observable, of, tap } from 'rxjs';
 import firebase from '@firebase/app-compat';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class MainService {
   private itemsCollection!: AngularFirestoreCollection<any>;
   private pageNumber!: AngularFirestoreCollection<any>;
   constructor(private router: Router, private auth: AngularFireAuth, private http: HttpClient, 
-    private readonly afs: AngularFirestore,private storage: AngularFireStorage) {
+    private readonly afs: AngularFirestore,private storage: AngularFireStorage,  public dialog: MatDialog) {
     this.auth.authState.subscribe(user => {
       if (user){
         this.user = user;
@@ -104,6 +106,10 @@ export class MainService {
                     const item = doc.data().page;
                     this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>null).catch(e => console.log(e));
                     this.isLoading =  false;
+                    this.dialog.open(SpinnerComponent, {
+                      width:'300px',
+                      height:'340px'
+                    });
                     return true;
                   });
                 });
