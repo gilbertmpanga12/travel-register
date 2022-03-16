@@ -55,7 +55,7 @@ export class DataformComponent implements OnInit {
       {name: 'Washing', completed: false, color: 'warn'},
       {name: 'Baby sitting', completed: false, color: 'warn'}
     ],
-  }
+  };
   otherLang:string='';
   otherSkills:string='';
   remarks: string='';
@@ -170,6 +170,7 @@ export class DataformComponent implements OnInit {
     this.afs.collection('pageNumber').doc('page').valueChanges().forEach((doc:any) => {
       this.fileNumber = doc?.page;
     });
+
     this.durationGroup.valueChanges.subscribe(data => {
       if(data['tDate'] && data['rDate']){
         const tDate = new Date(data['tDate']).getTime(), rDate = new Date(data['rDate']).getTime();
@@ -194,49 +195,50 @@ export class DataformComponent implements OnInit {
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
       const addressKeenGroup = this.addressKeenGroup.valid;
-      console.log(this.mainformGroup.getRawValue())
-      // if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
-      //   this.service.isLoading =  true;
-      //   const data  = this.mainformGroup.getRawValue();
-      //   const durationData = this.durationGroup.getRawValue();
-      //   data['languages'] = languages;
-      //   data['qualification'] = qualifications;
-      //   data['uid'] = this.afs.createId();
-      //   data['contactNumber'] ='+256'+data['contactNumber'];
-      //   data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-      //   data['otherLang'] = this.otherLang;
-      //   data['otherSkills']=this.otherSkills;
-      //   data['remarks']=this.remarks;
-      //   data['skills']=skills;
-      //   data['tDate']=durationData['tDate'];
-      //   data['rDate']=durationData['rDate'];
-      //   data['duration']=durationData['duration'];
-      //   this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
-      //     Swal.fire(
-      //       'Good job!',
-      //       'You data was saved',
-      //       'success'
-      //     );
-      //     this.fullPhotoUrl = null;
-      //     this.smallPhotoUrl=null;
-      //     this.passportUrl=null;
-      //     this.resumeUrl=null;
-      //     this.mainformGroup.reset();
-      //   }).catch(err => {
-      //     Swal.fire({
-      //       icon: 'error',
-      //       title: 'Warning',
-      //       text: 'You have missing fields, make sure all fields are filled in'
-      //     });
-      //   });
+      console.log('Is address group valid', addressKeenGroup)
+      if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos && addressKeenGroup){
+        this.service.isLoading =  true;
+        const data  = this.mainformGroup.getRawValue();
+        const durationData = this.durationGroup.getRawValue();
+        data['languages'] = languages;
+        data['qualification'] = qualifications;
+        data['uid'] = this.afs.createId();
+        data['contactNumber'] ='+256'+data['contactNumber'];
+        data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+        data['otherLang'] = this.otherLang;
+        data['otherSkills']=this.otherSkills;
+        data['remarks']=this.remarks;
+        data['skills']=skills;
+        data['tDate']=durationData['tDate'];
+        data['rDate']=durationData['rDate'];
+        data['duration']=durationData['duration'];
+        const finalData = {...data, ...this.addressKeenGroup.getRawValue()};
+        this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],finalData).then(() => {
+          Swal.fire(
+            'Good job!',
+            'You data was saved',
+            'success'
+          );
+          this.fullPhotoUrl = null;
+          this.smallPhotoUrl=null;
+          this.passportUrl=null;
+          this.resumeUrl=null;
+          this.mainformGroup.reset();
+        }).catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Warning',
+            text: 'You have missing fields, make sure all fields are filled in'
+          });
+        });
         
-      // }else{
-      //   Swal.fire({
-      //     icon: 'error',
-      //     title: 'Warning',
-      //     text: 'You have missing fields, make sure all fields are filled in'
-      //   });
-      // }
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Warning',
+          text: 'You have missing fields, make sure all fields are filled in'
+        });
+      }
 
     }catch(e){
       this.service.isLoading =  false;
@@ -322,8 +324,54 @@ export class DataformComponent implements OnInit {
       denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.durationGroup.reset();
         this.mainformGroup.reset();
-        this.avatar = null;
+        this.addressKeenGroup.reset();
+        this.fullPhotoUrl=null;
+        this.smallPhotoUrl=null;
+        this.passportUrl=null;
+        this.resumeUrl =null;
+        this.languages={
+          name: 'Indeterminate',
+          completed: false,
+          color: 'primary',
+          subtasks: [
+            {name: 'Local', completed: false, color: 'primary'},
+            {name: 'Arabic', completed: false, color: 'accent'},
+            {name: 'Swahili', completed: false, color: 'warn'},
+            {name: 'English', completed: false, color: 'warn'},
+            {name: 'French', completed: false, color: 'warn'}
+          ],
+        };
+        this.skills={
+          name: 'Indeterminate',
+          completed: false,
+          color: 'primary',
+          subtasks: [
+            {name: 'Cooking', completed: false, color: 'primary'},
+            {name: 'Ironing', completed: false, color: 'accent'},
+            {name: 'Cleaning', completed: false, color: 'warn'},
+            {name: 'Dusting', completed: false, color: 'warn'},
+            {name: 'Washing', completed: false, color: 'warn'},
+            {name: 'Baby sitting', completed: false, color: 'warn'}
+          ],
+        };
+
+        this.task={
+          name: 'Indeterminate',
+          completed: false,
+          color: 'primary',
+          subtasks: [
+            {name: 'PLE', completed: false, color: 'primary'},
+            {name: 'UCE', completed: false, color: 'accent'},
+            {name: 'UACE', completed: false, color: 'warn'},
+            {name: 'Diploma', completed: false, color: 'warn'},
+            {name: 'Certificate', completed: false, color: 'warn'},
+            {name: 'Degree', completed: false, color: 'warn'},
+            {name: 'Master', completed: false, color: 'warn'}
+          ],
+        };
+
       } else if (result.isDenied) {
        console.log('denied')
       }
