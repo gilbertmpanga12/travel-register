@@ -26,7 +26,7 @@ export class DataformComponent implements OnInit {
   defaultBottomBorderColor:string='#6b7280';
   moreThan90Days: boolean=true;
   defaultRangeBgColor: string = '#f3f4f6';
-  defaultTextColor: string='';
+  defaultTextColor: string='#0f172a';
   statusColors={
     daysLess60:'#10b981',
     range6181:'#eab308',
@@ -252,11 +252,7 @@ export class DataformComponent implements OnInit {
         data['duration']=durationData['duration'];
         const finalData = {...data, ...this.addressKeenGroup.getRawValue()};
         this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],finalData).then(() => {
-          this.fullPhotoUrl = null;
-          this.smallPhotoUrl=null;
-          this.passportUrl=null;
-          this.resumeUrl=null;
-          this.mainformGroup.reset();
+          this.fullReset();
         }).catch(err => {
           Swal.fire({
             icon: 'error',
@@ -357,55 +353,7 @@ export class DataformComponent implements OnInit {
       denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.durationGroup.reset();
-        this.mainformGroup.reset();
-        this.addressKeenGroup.reset();
-        this.fullPhotoUrl=null;
-        this.smallPhotoUrl=null;
-        this.passportUrl=null;
-        this.resumeUrl =null;
-        this.service.isLoading=false;
-        this.languages={
-          name: 'Indeterminate',
-          completed: false,
-          color: 'primary',
-          subtasks: [
-            {name: 'Local', completed: false, color: 'primary'},
-            {name: 'Arabic', completed: false, color: 'accent'},
-            {name: 'Swahili', completed: false, color: 'warn'},
-            {name: 'English', completed: false, color: 'warn'},
-            {name: 'French', completed: false, color: 'warn'}
-          ],
-        };
-        this.skills={
-          name: 'Indeterminate',
-          completed: false,
-          color: 'primary',
-          subtasks: [
-            {name: 'Cooking', completed: false, color: 'primary'},
-            {name: 'Ironing', completed: false, color: 'accent'},
-            {name: 'Cleaning', completed: false, color: 'warn'},
-            {name: 'Dusting', completed: false, color: 'warn'},
-            {name: 'Washing', completed: false, color: 'warn'},
-            {name: 'Baby sitting', completed: false, color: 'warn'}
-          ],
-        };
-
-        this.task={
-          name: 'Indeterminate',
-          completed: false,
-          color: 'primary',
-          subtasks: [
-            {name: 'PLE', completed: false, color: 'primary'},
-            {name: 'UCE', completed: false, color: 'accent'},
-            {name: 'UACE', completed: false, color: 'warn'},
-            {name: 'Diploma', completed: false, color: 'warn'},
-            {name: 'Certificate', completed: false, color: 'warn'},
-            {name: 'Degree', completed: false, color: 'warn'},
-            {name: 'Master', completed: false, color: 'warn'}
-          ],
-        };
-
+        this.fullReset();
       } else if (result.isDenied) {
        console.log('denied')
       }
@@ -418,6 +366,61 @@ export class DataformComponent implements OnInit {
       height:'340px',
       data: {operation:'failed'}
     });
+   }
+
+   fullReset(){
+    this.remarks='';
+    this.defaultTextColor='#0f172a';
+    this.defaultBottomBorderColor='#6b7280';
+    this.defaultRangeBgColor='#f3f4f6';
+    this.durationGroup.reset();
+    this.mainformGroup.reset();
+    this.addressKeenGroup.reset();
+    this.fullPhotoUrl=null;
+    this.smallPhotoUrl=null;
+    this.passportUrl=null;
+    this.resumeUrl =null;
+    this.service.isLoading=false;
+    this.languages={
+      name: 'Indeterminate',
+      completed: false,
+      color: 'primary',
+      subtasks: [
+        {name: 'Local', completed: false, color: 'primary'},
+        {name: 'Arabic', completed: false, color: 'accent'},
+        {name: 'Swahili', completed: false, color: 'warn'},
+        {name: 'English', completed: false, color: 'warn'},
+        {name: 'French', completed: false, color: 'warn'}
+      ],
+    };
+    this.skills={
+      name: 'Indeterminate',
+      completed: false,
+      color: 'primary',
+      subtasks: [
+        {name: 'Cooking', completed: false, color: 'primary'},
+        {name: 'Ironing', completed: false, color: 'accent'},
+        {name: 'Cleaning', completed: false, color: 'warn'},
+        {name: 'Dusting', completed: false, color: 'warn'},
+        {name: 'Washing', completed: false, color: 'warn'},
+        {name: 'Baby sitting', completed: false, color: 'warn'}
+      ],
+    };
+
+    this.task={
+      name: 'Indeterminate',
+      completed: false,
+      color: 'primary',
+      subtasks: [
+        {name: 'PLE', completed: false, color: 'primary'},
+        {name: 'UCE', completed: false, color: 'accent'},
+        {name: 'UACE', completed: false, color: 'warn'},
+        {name: 'Diploma', completed: false, color: 'warn'},
+        {name: 'Certificate', completed: false, color: 'warn'},
+        {name: 'Degree', completed: false, color: 'warn'},
+        {name: 'Master', completed: false, color: 'warn'}
+      ],
+    };
    }
 
 }

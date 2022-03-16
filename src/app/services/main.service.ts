@@ -89,7 +89,8 @@ export class MainService {
     this.isLoading =  true;
     this.dialog.open(SpinnerComponent, {
       width:'300px',
-      height:'340px'
+      height:'340px',
+      data:{operation:'loading'}
     });
     const userId:any = await firebase.auth().currentUser?.uid;
     const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
@@ -109,15 +110,34 @@ export class MainService {
                 this.incrementPageNumber().then(() => {
                   this.pageNumber.doc('page').get().forEach(doc => {
                     const item = doc.data().page;
-                    this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>null).catch(e => console.log(e));
+                    this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>{
                     this.isLoading =  false;
                     this.dialog.closeAll();
+                    this.dialog.open(SpinnerComponent, {
+                      width:'300px',
+                      height:'340px',
+                      data:{operation:'success'}
+                    });
+                    }).catch(e => {
+                      this.isLoading =  false;
+                this.dialog.closeAll();
+                this.dialog.open(SpinnerComponent, {
+                  width:'300px',
+                  height:'340px',
+                  data:{operation:'failed'}
+                });
+                    });
                      return true;
                   });
                 });
               }).catch((e) => {
                 this.isLoading =  false;
                 this.dialog.closeAll();
+                this.dialog.open(SpinnerComponent, {
+                  width:'300px',
+                  height:'340px',
+                  data:{operation:'failed'}
+                });
                 alert(e)});
           }).catch((err) => {
             this.isLoading =  false;
