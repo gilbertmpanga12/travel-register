@@ -529,10 +529,12 @@
             </mat-card>
         </div>
     </div>
-    <button mat-raised-button  style="background-color: #2563eb; position: fixed; bottom: 100px;border-radius: 25px;
+    <button
+    *ngIf="!service.isLoading"
+    mat-raised-button  style="background-color: #2563eb; position: fixed; bottom: 100px;border-radius: 25px;
     right: 150px;padding-top: 2px;padding-bottom: 2px;color: #fff;"
     [class.spinner]="service.isLoading" [disabled]="service.isLoading"
-    (click)="submitForm()"
+    (click)="test()"
 
-    ><span [hidden]="service.isLoading">Submit Data</span></button>
+    ><span>Submit Data</span></button>
 </main>

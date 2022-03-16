@@ -1,7 +1,44 @@
-<div mat-dialog-content>
-    <div class="spinner-cube">
-        <div class="cube1"></div>
-        <div class="cube2"></div>
-      </div>
-      <p style="text-align: center;color: #111827;margin-top: 0;">Please wait...</p>
-</div>
+
+
+
+<ng-container *ngIf="data.operation === 'loading'">
+    <div mat-dialog-content>
+        <div class="spinner-cube" >
+            <div class="cube1"></div>
+            <div class="cube2"></div>
+          </div>
+          <p style="text-align: center;color: #111827;margin-top: 0;">Please wait...</p>
+    
+    </div>
+    
+</ng-container>
+
+<ng-container *ngIf="data.operation === 'success'">
+    <div mat-dialog-content> 
+        <p style="text-align: center;margin-top: 33%;color: #10b981;margin-left: -70px;">
+            <mat-icon style="font-size: 100px;">done_all</mat-icon>
+        </p>
+        <p style="text-align: center;margin-left: -10px;color: #0f172a;font-size: 17px;font-weight: 400 !important;">Done  🎉🎉</p>
+        
+        </div>
+
+    <mat-dialog-actions align="center">
+        
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial style="border-radius: 25px;">Close</button>
+      </mat-dialog-actions>
+</ng-container>
+
+<ng-container *ngIf="data.operation === 'failed'">
+    <div mat-dialog-content> 
+        <p style="text-align: center;margin-top: 33%;color: #ef4444;margin-left: -70px;">
+            <mat-icon style="font-size: 90px;">cancel</mat-icon>
+        </p>
+    <p style="text-align: center;margin-left: -10px;color: #0f172a;font-size: 17px;font-weight: 400 !important;">Whoops! Failed</p>
+        
+        </div>
+
+    <mat-dialog-actions align="center">
+        
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial style="border-radius: 25px;">Try again</button>
+      </mat-dialog-actions>
+</ng-container>

@@ -5,6 +5,8 @@ import { districts } from './districts';
 import {MainService} from '../services/main.service';
 import Swal from 'sweetalert2';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 export interface CheckItem {
@@ -132,7 +134,7 @@ export class DataformComponent implements OnInit {
  smallPhotoUrl: any;
  passportUrl: any;
  resumeUrl: any;
-  constructor(private _fb: FormBuilder, public service: MainService, private afs: AngularFirestore) {
+  constructor(private _fb: FormBuilder, public service: MainService, private afs: AngularFirestore, private dialog: MatDialog) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 11, 31);
     this.maxDate = new Date(currentYear - 21, 11, 31);//currentYear + 1000, 11, 31 
@@ -234,7 +236,6 @@ export class DataformComponent implements OnInit {
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
       const addressKeenGroup = this.addressKeenGroup.valid;
       if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos && addressKeenGroup && this.moreThan90Days){
-        this.service.isLoading =  true;
         const data  = this.mainformGroup.getRawValue();
         const durationData = this.durationGroup.getRawValue();
         data['languages'] = languages;
@@ -251,11 +252,6 @@ export class DataformComponent implements OnInit {
         data['duration']=durationData['duration'];
         const finalData = {...data, ...this.addressKeenGroup.getRawValue()};
         this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],finalData).then(() => {
-          Swal.fire(
-            'Good job!',
-            'You data was saved',
-            'success'
-          );
           this.fullPhotoUrl = null;
           this.smallPhotoUrl=null;
           this.passportUrl=null;
@@ -368,6 +364,7 @@ export class DataformComponent implements OnInit {
         this.smallPhotoUrl=null;
         this.passportUrl=null;
         this.resumeUrl =null;
+        this.service.isLoading=false;
         this.languages={
           name: 'Indeterminate',
           completed: false,
@@ -413,6 +410,14 @@ export class DataformComponent implements OnInit {
        console.log('denied')
       }
     })
+   }
+
+   test(){
+    this.dialog.open(SpinnerComponent, {
+      width:'300px',
+      height:'340px',
+      data: {operation:'failed'}
+    });
    }
 
 }

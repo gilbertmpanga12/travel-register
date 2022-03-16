@@ -86,12 +86,17 @@ export class MainService {
   }
 
   async startUpload(file: any,data:any) {
+    this.isLoading =  true;
+    this.dialog.open(SpinnerComponent, {
+      width:'300px',
+      height:'340px'
+    });
     const userId:any = await firebase.auth().currentUser?.uid;
     const filePath = `users_${userId}/${new Date().getTime()}_${file.name}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
      this.percentageChangesStatus = task.percentageChanges();
-    
+     
      return task.snapshotChanges().pipe(
        finalize(() => {
          const downloadURL = fileRef.getDownloadURL();
@@ -106,18 +111,17 @@ export class MainService {
                     const item = doc.data().page;
                     this.itemsCollection.doc(data.uid).update({pageNumber:item}).then(()=>null).catch(e => console.log(e));
                     this.isLoading =  false;
-                    this.dialog.open(SpinnerComponent, {
-                      width:'300px',
-                      height:'340px'
-                    });
-                    return true;
+                    this.dialog.closeAll();
+                     return true;
                   });
                 });
               }).catch((e) => {
                 this.isLoading =  false;
+                this.dialog.closeAll();
                 alert(e)});
           }).catch((err) => {
             this.isLoading =  false;
+            this.dialog.closeAll();
             throw 'Something went wrong while updating data, try again!';
           });
           }
