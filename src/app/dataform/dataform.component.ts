@@ -20,6 +20,7 @@ export interface CheckItem {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  moreThan90Days: boolean=true;
   defaultRangeBgColor: string = '#f3f4f6';
   defaultTextColor: string='#111827';
   statusColors={
@@ -198,6 +199,7 @@ export class DataformComponent implements OnInit {
       if(days > 90){
         this.defaultRangeBgColor=this.statusColors.moreThan90;
         this.defaultTextColor='#f8fafc';
+        this.moreThan90Days=false;
         return;
       };
       if(days < 60){
@@ -226,8 +228,7 @@ export class DataformComponent implements OnInit {
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
       const addressKeenGroup = this.addressKeenGroup.valid;
-      console.log('Is address group valid', addressKeenGroup)
-      if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos && addressKeenGroup){
+      if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos && addressKeenGroup && this.moreThan90Days){
         this.service.isLoading =  true;
         const data  = this.mainformGroup.getRawValue();
         const durationData = this.durationGroup.getRawValue();
