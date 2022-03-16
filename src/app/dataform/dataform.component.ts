@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import { districts } from './districts';
 import {MainService} from '../services/main.service';
@@ -74,7 +74,7 @@ export class DataformComponent implements OnInit {
       {name: 'French', completed: false, color: 'warn'}
     ],
   };
-  gender: any[] = [{name:'Female', value:'Female'}, {name:'Male',value:'Male'}];// 
+  gender: any[] = [{name:'Female', value:'Female'}, {name:'Male',value:'Male'}];
   marriage: string[] = ['Single', 'Married'];
   religion: string[] = ['Christian', 'Muslim'];
   vaccine: string[] = ['Not yet', 'One Dose', 'Two Doses', 'Certified', 'Ready'];
@@ -100,6 +100,7 @@ export class DataformComponent implements OnInit {
 
   mainformGroup:FormGroup;
   durationGroup: FormGroup;
+  addressKeenGroup: FormGroup;
   form1: {name:string, control:string}[] = [{
     name:'First Name',
     control:'fname'
@@ -134,35 +135,35 @@ export class DataformComponent implements OnInit {
       passportExpiration:['', [Validators.required]],// auto increment by 10 years
       contactNumber: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]], // must start with 256
       altNumber:['', [Validators.minLength(9)]],
-      kinAltNumber: ['',[Validators.minLength(9)]],
       gender: ['', [Validators.required]],
       dob: ['', [Validators.required]],
       religion: ['', [Validators.required]],
       maritalStatus: ['', [Validators.required]],
-      languages: [''],
-      skills:[''],
-      address: [districts[0].city],
-      physicalAddress:['', [Validators.required]],
-      kinRelationship:['', [Validators.required]],
-      numberOfNextOfKin: ['', [Validators.required, Validators.minLength(9)]],
-      nextOfKin:['', [Validators.required]],
       gcc:['', [Validators.required]],
       medicalCenter:['', [Validators.required]],
       training:['', [Validators.required]],
-      vaccine:['', [Validators.required]],
-      agent:['', [Validators.required]],
       picture:[''],
       pageNumber: [0]
-
     });
+
     this.durationGroup = this._fb.group({
       tDate:[''],
       rDate: [''],
       duration: ['']
     });
 
-    
+    this.addressKeenGroup = this._fb.group({
+      vaccine:['', [Validators.required]],
+      agent:['', [Validators.required]],
+      nextOfKin:['', [Validators.required]],
+      kinRelationship:['', [Validators.required]],
+      numberOfNextOfKin: ['', [Validators.required, Validators.minLength(9)]],
+      kinAltNumber: ['',[Validators.minLength(9)]],
+      address: [districts[0].city],
+      physicalAddress:['', [Validators.required]],
+    });
    }
+
 
   ngOnInit(): void {
     this.afs.collection('pageNumber').doc('page').valueChanges().forEach((doc:any) => {
@@ -179,6 +180,11 @@ export class DataformComponent implements OnInit {
 
   }
 
+  getControls(target:string){
+    return (this.mainformGroup.get(target) as FormArray).controls;
+  }
+
+ 
   
   async submitForm(){
     try{
@@ -186,48 +192,49 @@ export class DataformComponent implements OnInit {
       const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
-      if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
-        this.service.isLoading =  true;
-        const data  = this.mainformGroup.getRawValue();
-        const durationData = this.durationGroup.getRawValue();
-        data['languages'] = languages;
-        data['qualification'] = qualifications;
-        data['uid'] = this.afs.createId();
-        data['contactNumber'] ='+256'+data['contactNumber'];
-        data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
-        data['otherLang'] = this.otherLang;
-        data['otherSkills']=this.otherSkills;
-        data['remarks']=this.remarks;
-        data['skills']=skills;
-        data['tDate']=durationData['tDate'];
-        data['rDate']=durationData['rDate'];
-        data['duration']=durationData['duration'];
-        this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
-          Swal.fire(
-            'Good job!',
-            'You data was saved',
-            'success'
-          );
-          this.fullPhotoUrl = null;
-          this.smallPhotoUrl=null;
-          this.passportUrl=null;
-          this.resumeUrl=null;
-          this.mainformGroup.reset();
-        }).catch(err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Warning',
-            text: 'You have missing fields, make sure all fields are filled in'
-          });
-        });
+      console.log(this.mainformGroup.getRawValue())
+      // if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
+      //   this.service.isLoading =  true;
+      //   const data  = this.mainformGroup.getRawValue();
+      //   const durationData = this.durationGroup.getRawValue();
+      //   data['languages'] = languages;
+      //   data['qualification'] = qualifications;
+      //   data['uid'] = this.afs.createId();
+      //   data['contactNumber'] ='+256'+data['contactNumber'];
+      //   data['numberOfNextOfKin'] = '+256'+data['numberOfNextOfKin'];
+      //   data['otherLang'] = this.otherLang;
+      //   data['otherSkills']=this.otherSkills;
+      //   data['remarks']=this.remarks;
+      //   data['skills']=skills;
+      //   data['tDate']=durationData['tDate'];
+      //   data['rDate']=durationData['rDate'];
+      //   data['duration']=durationData['duration'];
+      //   this.service.uploadNow([this.fullPhoto, this.smallPhoto, this.resume, this.passport],data).then(() => {
+      //     Swal.fire(
+      //       'Good job!',
+      //       'You data was saved',
+      //       'success'
+      //     );
+      //     this.fullPhotoUrl = null;
+      //     this.smallPhotoUrl=null;
+      //     this.passportUrl=null;
+      //     this.resumeUrl=null;
+      //     this.mainformGroup.reset();
+      //   }).catch(err => {
+      //     Swal.fire({
+      //       icon: 'error',
+      //       title: 'Warning',
+      //       text: 'You have missing fields, make sure all fields are filled in'
+      //     });
+      //   });
         
-      }else{
-        Swal.fire({
-          icon: 'error',
-          title: 'Warning',
-          text: 'You have missing fields, make sure all fields are filled in'
-        });
-      }
+      // }else{
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Warning',
+      //     text: 'You have missing fields, make sure all fields are filled in'
+      //   });
+      // }
 
     }catch(e){
       this.service.isLoading =  false;
@@ -252,14 +259,6 @@ export class DataformComponent implements OnInit {
   uploadDocuments(event: any, type:string): void{
     const eventFiles = event.target.files;
     const file = eventFiles.item(0);
-    // if (file!.type.split('/')[0] !== 'image' || file!.type.split('/')[0] !== 'document') { 
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Upload only images please!'
-    //   });
-    //   return;
-    // }
     this.togglePhotoTypes(file,type);
     
    };

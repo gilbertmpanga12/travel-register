@@ -284,120 +284,12 @@
                                 Training  is <strong>required</strong>
                                </mat-error>
                           </mat-form-field>
-                    </div>
-                  </div>
-
-                  <div class="flex-bar">
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Vaccine</mat-label>
-                            <mat-select formControlName="vaccine">
-                                <mat-option value="primary" *ngFor="let item of vaccine" [value]="item">{{item}}</mat-option>
-                                
-                              </mat-select>
-                              <mat-error *ngIf="requiredError('training')">
-                              Vaccine  is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Agent</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="agent">
-                            <mat-error *ngIf="errorController('agent')">
-                                Agent must not include illegal characters
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('agent')">
-                                Agent is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    
-                  </div>
-                  <div class="flex-bar">
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Next of Kin Name</mat-label>
-                            <input matInput placeholder="E.g John Doe" formControlName="nextOfKin">
-                            <mat-error *ngIf="errorController('nextOfKin')">
-                                Enter valid next of kin name
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('nextOfKin')">
-                                Next of kin name is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Relationship with Next of Kin</mat-label>
                           
-                            <mat-select formControlName="kinRelationship">
-                                <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
-                                
-                              </mat-select>
-                              <mat-error *ngIf="requiredError('kinRelationship')">
-                                Next of kin relationship is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-33">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Number of Next of Kin</mat-label>
-                            <span matPrefix>+256&nbsp;</span>
-                            <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="tel">
-                            <mat-error *ngIf="errorController('numberOfNextOfKin')">
-                                Enter a correct phone number
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('numberOfNextOfKin')">
-                                Next of kin telephone number <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-50">
-                      <mat-form-field appearance="fill" class="full-width">
-                          <mat-label>Number of Next of Kin Alternative number</mat-label>
-                          <span matPrefix>+256&nbsp;</span>
-                          <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="tel">
-                          <mat-error *ngIf="errorController('kinAltNumber')">
-                              Enter a correct phone number
-                             </mat-error>
-                             <mat-error *ngIf="requiredError('kinAltNumber')">
-                              Next of kin alternative telephone number <strong>required</strong>
-                             </mat-error>
-                        </mat-form-field>
-                  </div>
-                  </div>
-                  
-
-                  <div class="flex-bar">
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Address</mat-label>
-                            <mat-select formControlName="address">
-                                <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
-                              </mat-select>
-                              <mat-error *ngIf="errorController('address')">
-                                Enter a correct address
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('address')">
-                                Address is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
-                    </div>
-                    <div class="w-50">
-                        <mat-form-field appearance="fill" class="full-width">
-                            <mat-label>Physical Address</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="physicalAddress">
-                            <mat-error *ngIf="errorController('physicalAddress')">
-                                Enter a correct Physical address
-                               </mat-error>
-                               <mat-error *ngIf="requiredError('physicalAddress')">
-                                Physical address is <strong>required</strong>
-                               </mat-error>
-                          </mat-form-field>
                     </div>
                   </div>
+ <!-- marks end of form -->
                 </form>
+
                 <section>
                   <h3>Skills <small style="color: #9ca3af;">(Choose at least one)</small></h3>
               <ul class="unordered-list">
@@ -458,6 +350,123 @@
                     </li>
                   </ul>
                 </section><br/>
+
+                <section>
+                  <form [formGroup]="addressKeenGroup">
+                    <div class="flex-bar">
+                      <div class="w-50">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Vaccine</mat-label>
+                              <mat-select formControlName="vaccine">
+                                  <mat-option value="primary" *ngFor="let item of vaccine" [value]="item">{{item}}</mat-option>
+                                  
+                                </mat-select>
+                                <mat-error *ngIf="requiredError('training')">
+                                Vaccine  is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-50">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Agent</mat-label>
+                              <input matInput placeholder="Placeholder" formControlName="agent">
+                              <mat-error *ngIf="errorController('agent')">
+                                  Agent must not include illegal characters
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('agent')">
+                                  Agent is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      
+                    </div>
+                    <div class="flex-bar">
+                      <div class="w-33">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Next of Kin Name</mat-label>
+                              <input matInput placeholder="E.g John Doe" formControlName="nextOfKin">
+                              <mat-error *ngIf="errorController('nextOfKin')">
+                                  Enter valid next of kin name
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('nextOfKin')">
+                                  Next of kin name is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-33">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Relationship with Next of Kin</mat-label>
+                            
+                              <mat-select formControlName="kinRelationship">
+                                  <mat-option value="primary" *ngFor="let item of nextOfKeenRelationship" [value]="item">{{item}}</mat-option>
+                                  
+                                </mat-select>
+                                <mat-error *ngIf="requiredError('kinRelationship')">
+                                  Next of kin relationship is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-33">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Number of Next of Kin</mat-label>
+                              <span matPrefix>+256&nbsp;</span>
+                              <input matInput placeholder="Placeholder" formControlName="numberOfNextOfKin" minlength="9" maxlength="9" type="tel">
+                              <mat-error *ngIf="errorController('numberOfNextOfKin')">
+                                  Enter a correct phone number
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('numberOfNextOfKin')">
+                                  Next of kin telephone number <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-50">
+                        <mat-form-field appearance="fill" class="full-width">
+                            <mat-label>Number of Next of Kin Alternative number</mat-label>
+                            <span matPrefix>+256&nbsp;</span>
+                            <input matInput placeholder="Placeholder" formControlName="kinAltNumber" minlength="9" maxlength="9" type="tel">
+                            <mat-error *ngIf="errorController('kinAltNumber')">
+                                Enter a correct phone number
+                               </mat-error>
+                               <mat-error *ngIf="requiredError('kinAltNumber')">
+                                Next of kin alternative telephone number <strong>required</strong>
+                               </mat-error>
+                          </mat-form-field>
+                    </div>
+                    </div>
+                    
+  
+                    <div class="flex-bar">
+                      <div class="w-50">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Address</mat-label>
+                              <mat-select formControlName="address">
+                                  <mat-option value="primary" *ngFor="let item of address" [value]="item.city">{{item.city}}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="errorController('address')">
+                                  Enter a correct address
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('address')">
+                                  Address is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div class="w-50">
+                          <mat-form-field appearance="fill" class="full-width">
+                              <mat-label>Physical Address</mat-label>
+                              <input matInput placeholder="Placeholder" formControlName="physicalAddress">
+                              <mat-error *ngIf="errorController('physicalAddress')">
+                                  Enter a correct Physical address
+                                 </mat-error>
+                                 <mat-error *ngIf="requiredError('physicalAddress')">
+                                  Physical address is <strong>required</strong>
+                                 </mat-error>
+                            </mat-form-field>
+                      </div>
+                    </div>
+                  </form>
+                </section><br/>
+
+                
                 <section>
 
                   <form [formGroup]="durationGroup">
