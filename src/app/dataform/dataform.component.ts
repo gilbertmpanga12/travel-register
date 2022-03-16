@@ -81,6 +81,7 @@ export class DataformComponent implements OnInit {
   gcc: string[] = ['Not Yet', 'Booked', 'On Progress', 'Fit', 'Unfit'];
   training: string[] = ['Not yet', 'Approved', 'On training', 'Trained'];
   nextOfKeenRelationship: string[] = ['Relative','Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Others'];
+  medicalCenter: string[] = ['Bayan', 'City Medical', 'JB', 'Jeoro', 'Kalson', 'Medi Care', 'Medical World', 'Travel C'];
   address = districts;
   allComplete: boolean = false;
   allCompleteLang: boolean = false;
@@ -192,6 +193,7 @@ export class DataformComponent implements OnInit {
       const languages = this.languages.subtasks?.filter(item => item.completed).map(item => item.name);
       const qualifications = this.task.subtasks?.filter(item => item.completed).map(item => item.name);
       const skills =this.skills.subtasks?.filter(item => item.completed).map(item => item.name);
+      const addressKeenGroup = this.addressKeenGroup.valid;
       console.log(this.mainformGroup.getRawValue())
       // if(this.mainformGroup.valid  && languages!.length>0 && qualifications!.length>0&&skills!.length>0 && hasAllPhotos){
       //   this.service.isLoading =  true;

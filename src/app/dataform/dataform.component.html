@@ -263,10 +263,10 @@
                     <div class="w-33">
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Medical Center</mat-label>
-                            <input matInput placeholder="Placeholder" formControlName="medicalCenter">
-                            <mat-error *ngIf="errorController('medicalCenter')">
-                                Medical center must not include illegal characters
-                               </mat-error>
+                            <mat-select formControlName="medicalCenter">
+                              <mat-option value="primary" *ngFor="let item of medicalCenter" [value]="item">{{item}}</mat-option>
+                              
+                            </mat-select>
                                <mat-error *ngIf="requiredError('medicalCenter')">
                                 Medical center is <strong>required</strong>
                                </mat-error>
