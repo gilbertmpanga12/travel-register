@@ -20,6 +20,13 @@ export interface CheckItem {
   styleUrls: ['./dataform.component.scss']
 })
 export class DataformComponent implements OnInit {
+  defaultRangeBgColor: string = '#f3f4f6';
+  defaultTextColor: string='#111827';
+  statusColors={
+    daysLess60:'#10b981',
+    range6181:'#eab308',
+    moreThan90:'#ef4444'
+ }
   minDate: Date;
   maxDate: Date;
   file:any;
@@ -176,6 +183,7 @@ export class DataformComponent implements OnInit {
         const tDate = new Date(data['tDate']).getTime(), rDate = new Date(data['rDate']).getTime();
         const diff = tDate-rDate;
         const diffInDays= diff/ (1000 * 3600 * 24);
+        this.markWarning(diffInDays);
         this.durationGroup.get('duration')?.setValue(`${diffInDays}`,{emitEvent: false});
       }
     });
@@ -184,6 +192,29 @@ export class DataformComponent implements OnInit {
 
   getControls(target:string){
     return (this.mainformGroup.get(target) as FormArray).controls;
+  }
+
+  markWarning(days: number){
+      if(days > 90){
+        this.defaultRangeBgColor=this.statusColors.moreThan90;
+        this.defaultTextColor='#fff';
+        return;
+      };
+      if(days < 60){
+        this.defaultRangeBgColor=this.statusColors.daysLess60;
+        this.defaultTextColor='#fff';
+        return;
+      };
+      if(days > 61 || days <= 89){
+        this.defaultRangeBgColor=this.statusColors.range6181;
+        this.defaultTextColor='#fff';
+        return;
+      };
+     
+  };
+
+  pluraliseDays(days:number){
+    return Number(days) > 1? days + ' days': days+ ' day';
   }
 
  
