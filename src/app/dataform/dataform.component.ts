@@ -197,17 +197,17 @@ export class DataformComponent implements OnInit {
   markWarning(days: number){
       if(days > 90){
         this.defaultRangeBgColor=this.statusColors.moreThan90;
-        this.defaultTextColor='#fff';
+        this.defaultTextColor='#f8fafc';
         return;
       };
       if(days < 60){
         this.defaultRangeBgColor=this.statusColors.daysLess60;
-        this.defaultTextColor='#fff';
+        this.defaultTextColor='#f8fafc';
         return;
       };
       if(days > 61 || days <= 89){
         this.defaultRangeBgColor=this.statusColors.range6181;
-        this.defaultTextColor='#fff';
+        this.defaultTextColor='#f8fafc';
         return;
       };
      
